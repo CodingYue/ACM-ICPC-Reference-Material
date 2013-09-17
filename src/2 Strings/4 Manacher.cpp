@@ -9,7 +9,7 @@ int Manacher(char* Text,int len)
 	int k = 0;
 	for(int i = 0,j = 0;i < len;i += k,j = max(j-k,0))
 	{
-		while((i-j)/2 >= 0 && (i+j+1)/2 < len && Text[(i-j)/2] == Text[(i+j+1)/2]) j++;
+		while(i-j >= 0 && i+j+1 < len && Text[(i-j)>>1] == Text[(i+j+1)>>1]) j++;
 		rad[i] = j;
 		for(k = 1;i-k >= 0 && rad[i]-k >= 0 && rad[i-k] != rad[i]-k;k++)
 			rad[i+k] = min(rad[i-k],rad[i]-k);
