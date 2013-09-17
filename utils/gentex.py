@@ -1,6 +1,5 @@
-#!c:/python27/python
 #!/usr/bin/python
-import re, os, hashlib
+import re, os, sys, hashlib
 
 # Improved Windows Support.
 
