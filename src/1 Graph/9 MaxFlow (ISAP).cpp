@@ -1,0 +1,109 @@
+<TeX> 最大流，时间复杂度 $O(n^2m)$ 。多次使用记得初始化。</TeX>
+const int MAXM = 1000000;
+const int MAXN = 25000;
+const int INF = 0x7FFFFFFF;
+
+struct ARC
+{
+	int y,c;
+	ARC* Next,R;
+};
+
+ARC APool[MAXM*2];
+ARC* APTop = APool;
+ARC* Arc[MAXN];
+
+int insert_arc(int x,int y,int c,int rc=0)
+{
+	ARC* fore = APTop++;
+	fore->y = y; fore->c = c; fore->Next = Arc[x]; Arc[x] = fore;
+	ARC* back = APTop++;
+	back->y = x; back->c = rc; back->Next = Arc[y]; Arc[y] = back;
+
+	fore->R = back; back->R = fore;
+	return 0;
+}
+
+int dis[MAXN],pre[MAXN],gap[MAXN];
+ARC* curArc[MAXN];
+int init_distance_mark(int s,int t,int n)
+{
+	fill(dis,dis+MAXN,n);
+	queue<int> q;
+	q.push(t);
+	dis[t] = 0;
+	while(!q.empty())
+	{
+		int x = q.front(); q.pop();
+		for(ARC* a = Arc[x];a;a = a->Next)
+		{
+			if(a->R->c <= 0) continue;
+			if(dis[a->y] > dis[x]+1)
+			{
+				dis[a->y] = dis[x]+1;
+				q.push(a->y);
+			}
+		}
+	}
+	memset(gap,0,sizeof(gap));
+	for(int i = 0;i < n;i++) gap[dis[i]]++;
+	return 0;
+}
+int max_flow(int s,int t,int n)
+{
+	memset(dis,0,sizeof(dis));
+	memset(curArc,0,sizeof(curArc));
+	// memset(gap,0,sizeof(gap));
+	// gap[0] = n;
+	init_distance_mark(s,t,n);
+
+	int maxflow = 0;
+	int x = s;
+	while(dis[s] < n)
+	{
+		if(x == t)
+		{
+			int tflow = INF;
+			while(x != s)
+			{
+				tflow = min(tflow,curArc[pre[x]]->c);
+				x = pre[x];
+			}
+			x = t;
+			while(x != s)
+			{
+				curArc[pre[x]]->c -= tflow;
+				curArc[pre[x]]->R->c += tflow;
+				x = pre[x];
+			}
+			maxflow += tflow;
+			continue;
+		}
+		if(!curArc[x]) curArc[x] = Arc[x];
+		ARC* ar = curArc[x];
+		for(;ar;ar = ar->Next)
+		{
+			int y = ar->y;
+			int c = ar->c;
+			if(!c) continue;
+			if(dis[y]+1 == dis[x]) break;
+		}
+		curArc[x] = ar;
+		if(!ar)
+		{
+			int mindis = n+1; // relabel
+			for(ARC* a = Arc[x];a;a = a->Next) if(a->c) mindis = min(mindis,dis[a->y]+1);
+			gap[dis[x]]--;
+			if(!gap[dis[x]]) break;
+			gap[dis[x] = mindis]++;
+			if(x != s) x = pre[x];
+		}
+		else
+		{
+			pre[ar->y] = x;
+			x = ar->y;
+		}
+	}
+	return maxflow;
+}
+

@@ -1,0 +1,361 @@
+\section{比赛配置}
+\subsection{代码库校验和}
+\createlinenumber{1}{01b4}
+\createlinenumber{2}{44f9}
+\createlinenumber{3}{4de6}
+\createlinenumber{4}{c502}
+\createlinenumber{5}{427e}
+\createlinenumber{6}{b41f}
+\createlinenumber{7}{d74e}
+\createlinenumber{8}{427e}
+\createlinenumber{9}{f7db}
+\createlinenumber{10}{f335}
+\begin{lstlisting}[language=Python]
+# 代码库校验用于检查代码库录入是否正确，忽略每行的空白字符和注释(//)
+# 使用方法: python checksum.py < 1001.cpp
+# 输出: 每一行代码及其校验和(md5)
+import re, sys, hashlib
+
+def digest_line(s):
+	return hashlib.md5(re.sub(r'\s|//.*', '', s)).hexdigest()[-4:]
+
+for line in sys.stdin.read().strip().split("\n"):
+	print digest_line(line), line
+\end{lstlisting}
+\subsection{vim配置文件}
+\createlinenumber{11}{44ed}
+\createlinenumber{12}{914c}
+\createlinenumber{13}{7db5}
+\createlinenumber{14}{57b2}
+\createlinenumber{15}{9832}
+\createlinenumber{16}{e416}
+\createlinenumber{17}{7232}
+\createlinenumber{18}{740c}
+\createlinenumber{19}{5913}
+\begin{lstlisting}[language={}]
+# vimrc 配置文件
+set nocompatible
+set number
+set ruler
+set showcmd
+set autoindent
+set cindent
+set smartindent
+set shiftwidth=4
+\end{lstlisting}
+
+\section{Strings}
+\subsection{Gusfield}
+\createlinenumber{20}{87e7}
+\createlinenumber{21}{c8ea}
+\createlinenumber{22}{dbc5}
+\createlinenumber{23}{1488}
+\createlinenumber{24}{e21c}
+\createlinenumber{25}{f2b5}
+\createlinenumber{26}{2b5a}
+\createlinenumber{27}{1476}
+\createlinenumber{28}{4506}
+\createlinenumber{29}{b21d}
+\createlinenumber{30}{e457}
+\createlinenumber{31}{427e}
+\createlinenumber{32}{b370}
+\createlinenumber{33}{dc13}
+\createlinenumber{34}{3ef0}
+\createlinenumber{35}{427e}
+\createlinenumber{36}{b18a}
+\createlinenumber{37}{61e8}
+\createlinenumber{38}{24ab}
+\createlinenumber{39}{4506}
+\createlinenumber{40}{09b0}
+\createlinenumber{41}{4506}
+\createlinenumber{42}{6fa0}
+\createlinenumber{43}{dab3}
+\createlinenumber{44}{3dfa}
+\createlinenumber{45}{8737}
+\createlinenumber{46}{95cf}
+\createlinenumber{47}{34c9}
+\createlinenumber{48}{95cf}
+\createlinenumber{49}{7021}
+\createlinenumber{50}{95cf}
+\begin{lstlisting}[language=C++]
+/*
+  Also known as "Extended KMP".
+  Guide:
+    z[i] = lcp(text+i,pattern)
+    Run zFunction(z_pat,pat,pat,patLen,patLen) for self matching.
+*/
+int z_pat[2222222] = {0};
+int zFunction(int* z,char* text,char* pat,int textLen=-1,int patLen=-1)
+{
+	if(textLen == -1) textLen = strlen(text);
+	if(patLen == -1) patLen = strlen(pat);
+	
+	int self = (text == pat && textLen == patLen);
+	if(!self) zFunction(z_pat,pat,pat,patLen,patLen);
+	else z[0] = patLen;
+	
+	int farfrom = 0;
+	int far = self; // self->[farfrom,far) else [farfrom,far]
+	for(int i = self;i < textLen;i++)
+	{
+		if(i+z_pat[i-farfrom] >= far)
+		{
+			int x = max(far,i);
+			while(x < textLen && x-i < patLen && text[x] == pat[x-i]) x++;
+			z[i] = x-i;
+			if(i < x) { farfrom = i; far = x; }
+		}
+		else z[i] = z_pat[i-farfrom];
+	}
+	return 0;
+}
+\end{lstlisting}
+\subsection{Gusfield_Normal}
+\createlinenumber{51}{427e}
+\createlinenumber{52}{bec7}
+\createlinenumber{53}{4506}
+\createlinenumber{54}{3c83}
+\createlinenumber{55}{427e}
+\createlinenumber{56}{082c}
+\createlinenumber{57}{b18a}
+\createlinenumber{58}{09aa}
+\createlinenumber{59}{e170}
+\createlinenumber{60}{4506}
+\createlinenumber{61}{dad2}
+\createlinenumber{62}{4506}
+\createlinenumber{63}{6fa0}
+\createlinenumber{64}{ccc3}
+\createlinenumber{65}{3dfa}
+\createlinenumber{66}{8737}
+\createlinenumber{67}{95cf}
+\createlinenumber{68}{83a0}
+\createlinenumber{69}{95cf}
+\createlinenumber{70}{7021}
+\createlinenumber{71}{95cf}
+\createlinenumber{72}{427e}
+\createlinenumber{73}{427e}
+\createlinenumber{74}{1476}
+\createlinenumber{75}{4506}
+\createlinenumber{76}{b21d}
+\createlinenumber{77}{e457}
+\createlinenumber{78}{427e}
+\createlinenumber{79}{ae13}
+\createlinenumber{80}{d84e}
+\createlinenumber{81}{427e}
+\createlinenumber{82}{b18a}
+\createlinenumber{83}{9d9d}
+\createlinenumber{84}{8262}
+\createlinenumber{85}{4506}
+\createlinenumber{86}{09b0}
+\createlinenumber{87}{4506}
+\createlinenumber{88}{6fa0}
+\createlinenumber{89}{dab3}
+\createlinenumber{90}{3dfa}
+\createlinenumber{91}{8737}
+\createlinenumber{92}{95cf}
+\createlinenumber{93}{34c9}
+\createlinenumber{94}{95cf}
+\createlinenumber{95}{7021}
+\createlinenumber{96}{95cf}
+\begin{lstlisting}[language={}]
+// zSelf
+int zFunction(int* z,char* str,int len=-1)
+{
+	if(len == -1) len = strlen(str);
+	
+	z[0] = len;
+	int farfrom = 0;
+	int far = 1; // [farfrom,far)
+	for(int i = 1;i < len;i++)
+	{
+		if(i+z[i-farfrom] >= far)
+		{
+			int x = max(far,i);
+			while(x < len && str[x] == str[x-i]) x++;
+			z[i] = x-i;
+			if(i < x) { farfrom = i; far = x; }
+		}
+		else z[i] = z[i-farfrom];
+	}
+	return 0;
+}
+
+// zIt
+int zFunction(int* z,char* text,char* pat,int textLen=-1,int patLen=-1)
+{
+	if(textLen == -1) textLen = strlen(text);
+	if(patLen == -1) patLen = strlen(pat);
+	
+	static int z_pat[2222222] = {0};
+	zFunction(z_pat,pat,patLen);
+	
+	int farfrom = 0;
+	int far = 0; // [farfrom,far]
+	for(int i = 0;i < textLen;i++)
+	{
+		if(i+z_pat[i-farfrom] >= far)
+		{
+			int x = max(far,i);
+			while(x < textLen && x-i < patLen && text[x] == pat[x-i]) x++;
+			z[i] = x-i;
+			if(i < x) { farfrom = i; far = x; }
+		}
+		else z[i] = z_pat[i-farfrom];
+	}
+	return 0;
+}
+\end{lstlisting}
+\subsection{MinimalCycleExp}
+\createlinenumber{97}{87e7}
+\createlinenumber{98}{8c06}
+\createlinenumber{99}{f2b5}
+\createlinenumber{100}{427e}
+\createlinenumber{101}{7d57}
+\createlinenumber{102}{4506}
+\createlinenumber{103}{45f2}
+\createlinenumber{104}{427e}
+\createlinenumber{105}{1b49}
+\createlinenumber{106}{6935}
+\createlinenumber{107}{08aa}
+\createlinenumber{108}{4506}
+\createlinenumber{109}{c41f}
+\createlinenumber{110}{d68a}
+\createlinenumber{111}{0768}
+\createlinenumber{112}{427e}
+\createlinenumber{113}{5728}
+\createlinenumber{114}{5e2d}
+\createlinenumber{115}{95cf}
+\createlinenumber{116}{1228}
+\createlinenumber{117}{95cf}
+\begin{lstlisting}[language=C++]
+/*
+  =_=
+*/
+
+int MinimalRep(char* text,int len=-1)
+{
+	if(len == -1) len = strlen(text);
+
+	int i = 0;
+	int j = 1;
+	while(i < len && j < len)
+	{
+		int k = 0;
+		while(k < len && text[(i+k)%len] == text[(j+k)%len]) k++;
+		if(k >= len) break;
+
+		if(text[(i+k)%len] > text[(j+k)%len]) i = max(i+k+1,j+1);
+		else j = max(i+1,j+k+1);
+	}
+	return min(i,j);
+}
+\end{lstlisting}
+
+\section{其他}
+\subsection{校赛Meeting标程}
+\createlinenumber{118}{1915}
+\createlinenumber{119}{1fa4}
+\createlinenumber{120}{427e}
+\createlinenumber{121}{842a}
+\createlinenumber{122}{8f9d}
+\createlinenumber{123}{427e}
+\createlinenumber{124}{4d45}
+\createlinenumber{125}{4506}
+\createlinenumber{126}{ec32}
+\createlinenumber{127}{e2fe}
+\createlinenumber{128}{3df7}
+\createlinenumber{129}{b00a}
+\createlinenumber{130}{05ee}
+\createlinenumber{131}{4506}
+\createlinenumber{132}{5c82}
+\createlinenumber{133}{c0ce}
+\createlinenumber{134}{583c}
+\createlinenumber{135}{95cf}
+\createlinenumber{136}{547e}
+\createlinenumber{137}{95cf}
+\createlinenumber{138}{427e}
+\createlinenumber{139}{afdd}
+\createlinenumber{140}{4506}
+\createlinenumber{141}{918b}
+\createlinenumber{142}{b4a4}
+\createlinenumber{143}{4506}
+\createlinenumber{144}{3dd0}
+\createlinenumber{145}{8a02}
+\createlinenumber{146}{40c0}
+\createlinenumber{147}{95cf}
+\createlinenumber{148}{39f8}
+\createlinenumber{149}{95cf}
+\createlinenumber{150}{427e}
+\createlinenumber{151}{299c}
+\createlinenumber{152}{4506}
+\createlinenumber{153}{9523}
+\createlinenumber{154}{918b}
+\createlinenumber{155}{427e}
+\createlinenumber{156}{ba03}
+\createlinenumber{157}{4506}
+\createlinenumber{158}{e322}
+\createlinenumber{159}{6f5e}
+\createlinenumber{160}{4506}
+\createlinenumber{161}{3dd0}
+\createlinenumber{162}{8a02}
+\createlinenumber{163}{7091}
+\createlinenumber{164}{95cf}
+\createlinenumber{165}{a0d8}
+\createlinenumber{166}{95cf}
+\createlinenumber{167}{427e}
+\createlinenumber{168}{7021}
+\createlinenumber{169}{95cf}
+\begin{lstlisting}[language=C++]
+#include <stdio.h>
+#include <math.h>
+
+int u1, v1, u2, v2, u3, v3;
+double x, y, d;
+
+double f(double u, double v)
+{
+   double r=0;
+   r+=sqrt((u-u1)*(u-u1)+(v-v1)*(v-v1));
+   r+=sqrt((u-u2)*(u-u2)+(v-v2)*(v-v2));
+   r+=sqrt((u-u3)*(u-u3)+(v-v3)*(v-v3));
+   if(r<d)
+   {
+      d=r;
+      x=u;
+      y=v;
+   }
+   return r;
+}
+
+double f(double u)
+{
+   double L, R, M1, M2;
+   for(L=-1001, R=1001; R-L>1e-6; )
+   {
+      M1=(L*2+R)/3;
+      M2=(L+R*2)/3;
+      f(u, M1)<f(u, M2)?(R=M2):(L=M1);
+   }
+   return f(u, (L+R)/2);
+}
+
+int main()
+{
+   int T;
+   double L, R, M1, M2;
+   
+   for(scanf("%d", &T); T--; )
+   {
+      scanf("%d %d %d %d %d %d", &u1, &v1, &u2, &v2, &u3, &v3);
+      for(d=1e100, L=-1001, R=1001; R-L>1e-6; )
+      {
+         M1=(L*2+R)/3;
+         M2=(L+R*2)/3;
+         f(M1)<f(M2)?(R=M2):(L=M1);
+      }
+      printf("(%.3lf,%.3lf)\n", x, y);
+   }
+   
+   return 0;
+}
+\end{lstlisting}

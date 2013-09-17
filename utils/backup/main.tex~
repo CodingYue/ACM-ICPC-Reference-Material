@@ -1,0 +1,25 @@
+\documentclass[a4paper]{article}
+\usepackage[lmargin=0.5in,rmargin=0.5in,tmargin=0.4in,bmargin=0.3in,landscape,footskip=1.1in,headsep=8pt,a4paper]{geometry}
+
+\input{format.tex} % formatting template
+
+\begin{document}
+
+\title{\Huge \bf 爱草莓/爱吃泡菜 Code Library}
+\author{Faliatre at zhANGjiang Univ.}
+\date{}
+
+\maketitle
+
+\begin{multicols*}{2}
+\tableofcontents
+\end{multicols*}
+
+\newpage
+
+\columnseprule=0pt
+
+\begin{multicols*}{2}
+\input{code.tex}
+\end{multicols*}
+\end{document}
