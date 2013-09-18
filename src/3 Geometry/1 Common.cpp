@@ -1,6 +1,6 @@
-
 const double eps = 1e-8;
 
+// test for git
 inline double dcmp(double x) { return x < -eps ? -1 : x > eps; }
 inline double xmul(Point a, Point b, Point c) {
 	return (c - a) * (c - b);
