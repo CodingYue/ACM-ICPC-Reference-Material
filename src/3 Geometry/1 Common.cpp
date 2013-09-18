@@ -1,3 +1,4 @@
+
 const double eps = 1e-8;
 
 inline double dcmp(double x) { return x < -eps ? -1 : x > eps; }
