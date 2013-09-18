@@ -20,11 +20,11 @@ def gen_section(name, dirname):
 	global line_count
 	sect = []
 	#sect.append("\\section{%s}" % name)
-	sect.append("\\section{%s}" % name.decode('gbk').encode('utf-8'))
+	sect.append("\\section{%s}" % name.encode('utf-8'))
 
 	files = []
-	for src in os.listdir("./%s/" % dirname):
-		fp = open("./%s/%s" % (dirname, src), "r") # read the file
+	for src in os.listdir(u"./%s/" % dirname):
+		fp = open(u"./%s/%s" % (dirname, src), "r") # read the file
 		code = fp.read().strip()
 		fp.close()
 
@@ -38,7 +38,7 @@ def gen_section(name, dirname):
 	for (index, title, extension, code) in sorted(files):
 		#sect.append("\\subsection{%s}" % title)
 		title = title.replace('_','\\_')
-		sect.append("\\subsection{%s}" % title.decode('gbk').encode('utf-8'))
+		sect.append("\\subsection{%s}" % title.encode('utf-8'))
 
 		#for line in code.split("\n"):
 		#	sect.append("\\createlinenumber{%d}{%s}" % (line_count, digest_line(line)))
@@ -64,8 +64,8 @@ def gen_section(name, dirname):
 	return "\n".join(sect)
 
 doc = []
-os.chdir("../src/")
-for section in os.listdir("."):
+os.chdir(u"../src/")
+for section in os.listdir(u"."):
 	match = re.search(r'^(\d+) (.*)$', section)
 	(index, name) = (int(match.group(1)), match.group(2)) if match else (99999, section)
 	doc.append((index, name, section))
