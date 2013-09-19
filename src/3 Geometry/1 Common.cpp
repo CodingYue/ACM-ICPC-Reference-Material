@@ -119,3 +119,15 @@ Point Plane_Line(Point p, Point o, Point q1, Point q2) {
 	//if (abs(d) < eps) return NULL;
 	return ((q1 * a) - (q2 * b)) / d;
 }
+// 平面与平面的交线
+vector<Point> getFF(Point p1, Point o1, Point p2, Point o2) {
+	vector<Point> res;
+	Point e = o1 * o2;
+	Point v = o1 * e;
+	double d = o2 % v;
+	if (abs(d) < eps) return res;
+	Point q = p1 + v * ((o2 % (p1 - p1)) / d);
+	res.push_back(q);
+	res.push_back(q + e);
+	return res;
+}
