@@ -4,7 +4,7 @@
 	
 	generate function $\prod\limits_{n=1}^{\infty} 1+x^n+x^{2n}+x^{3n}+\dots = \prod\limits_{n=1}^{\infty} \frac{1}{1-x^{n}} $
 
-	$ \prod_{n=1}^\infty (1-x^n)=\sum_{k=-\infty}^\infty(-1)^kx^{k(3k-1)/2}=\sum_{k=0}^\infty(-1)^kx^{k(3k\pm 1)/2}. $
+	$ \prod\limits_{n=1}^\infty (1-x^n)=\sum\limits_{k=-\infty}^\infty(-1)^kx^{k(3k-1)/2}=\sum\limits_{k=0}^\infty(-1)^kx^{k(3k\pm 1)/2} $\\
 </TeX>
 
 void parition(int n) {
