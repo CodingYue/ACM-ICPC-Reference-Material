@@ -1,5 +1,6 @@
 <TeX>
-	素数p, $n! = ap^k$时, 返回$a (mod p)$
+	素数p, $n! = ap^k$时, 返回$a (mod\quad p)$
+</TeX>
 int modFact(long long n, int p) {
 	int res = 1;
 	while (n > 0) {
