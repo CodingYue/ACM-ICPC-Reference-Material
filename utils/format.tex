@@ -2,7 +2,6 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{fontspec,xunicode,xltxtra}
-\usepackage{titlesec}
 \usepackage{indentfirst}
 \usepackage[BoldFont,SlantFont]{xeCJK}
 \usepackage{fancyhdr}
@@ -13,6 +12,7 @@
 \usepackage[savepos]{zref}
 \usepackage{multicol}
 \usepackage{lastpage}
+\usepackage{titlesec}
 % \XeTeXinputencoding "cp936"
 
 \setCJKfamilyfont{hei}{SimHei}
@@ -57,8 +57,12 @@
 }
 
 % font of section header
-\usepackage{sectsty}
-\allsectionsfont{\hei}
+%\usepackage{sectsty}
+%\allsectionsfont{\hei}
+
+\titlespacing{\section}{0pt}{0pt}{1em}
+\titlespacing{\subsection}{0pt}{0pt}{0.5em}
+\titlespacing{\subsubsection}{0pt}{0pt}{0.5em}
 
 % main font of code, Liberation Mono looks pretty good
 % \newfontfamily{\monotype}{Liberation Mono}
