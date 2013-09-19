@@ -3,13 +3,13 @@ inline double dcmp(double x) { return x < -eps ? -1 : x > eps; }
 inline double xmul(Point a, Point b, Point c) {
 	return (c - a) * (c - b);
 }
-//点p到直线p1,p2距离
+//点p 到直线{p1, p2} 距离
 double disLP(Point p1, Point p2, Point q) {
 	return fabs((p1 - q) * (p2 - q)) / (p1 - p2).len();
 }
 // 平面几何
 
-// 点q到线段p1,p2的距离
+// 点q 到线段{p1, p2} 的距离
 double dis_Seg_P(Point p1, Point p2, Point q) {
 	if ((p2 - p1) % (q - p1) < eps) return (q - p1).len();
 	if ((p1 - p2) % (q - p2) < eps) return (q - p2).len();
@@ -32,7 +32,7 @@ Point get_intersect(Line s1, Line s2) {
 	t.y = (s2.s.y * v + s2.e.y * u) / (u + v);
 	return t;
 }
-// 点P是否在直线p1, p2上
+// 点P 是否在直线{p1, p2} 上
 bool is_point_onseg(const Point& p1,const Point& p2,const Point& P)
 {
 	if(! (min(p1.x,p2.x) <= P.x && P.x <= max(p1.x,p2.x) &&
@@ -41,7 +41,7 @@ bool is_point_onseg(const Point& p1,const Point& p2,const Point& P)
 	if(dcmp((P-p1)*(p2-p1)) == 0) return true;
 	return false;
 }
-// 点q到直线p1, p2垂足
+// 点q 到直线{p1, p2} 垂足
 Point proj(Point p1, Point p2, Point q) {
 	double d = (q2 - q1) * (p2 - p1);
 	//if (abs(d) < eps) return NULL;
@@ -61,6 +61,7 @@ vector<Point> getCL(Point c, double r, Point p1, Point p2) {
 	res.push_back(q1 + q2);
 	return res;
 }
+// 圆与圆的交点
 vector<Point> getCC(Point c1, double r1, Point c2, double r2) {
 	vector<Point> res;
 	double x = (c1 - c2).len();
@@ -87,7 +88,7 @@ double areaCC(Point c1, double r1, Point c2, double r2) {
 	double t2 = acos((d - x) / r2);
 	return r1 * r1 * t1 + r2 * r2 * t2 - d * r1 * sin(t1);
 }
-// ccenter 返回p1, p2, p3的外接圆圆心.(公式在formula)
+// ccenter 返回{p1, p2, p3} 的外接圆圆心, formula
 // 四点在同一圆周
 bool onCir(Point p1, Point p2, Point p3, Point p4) {
 	if (fabs((p2 - p1) * (p3 - p1)) < eps) return true;
