@@ -8,6 +8,7 @@ double disLP(Point p1, Point p2, Point q) {
 	return fabs((p1 - q) * (p2 - q)) / (p1 - p2).len();
 }
 // 平面几何
+
 // 点q到线段p1,p2的距离
 double dis_Seg_P(Point p1, Point p2, Point q) {
 	if ((p2 - p1) % (q - p1) < eps) return (q - p1).len();
@@ -86,8 +87,6 @@ double areaCC(Point c1, double r1, Point c2, double r2) {
 	double t2 = acos((d - x) / r2);
 	return r1 * r1 * t1 + r2 * r2 * t2 - d * r1 * sin(t1);
 }
-//
-
 // ccenter 返回p1, p2, p3的外接圆圆心.(公式在formula)
 // 四点在同一圆周
 bool onCir(Point p1, Point p2, Point p3, Point p4) {
