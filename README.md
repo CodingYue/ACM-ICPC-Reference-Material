@@ -9,3 +9,8 @@ Use "<TeX>" "</TeX>" to escape to TeX.
 代码全扔src目录里即可，里面可以有子目录，子目录和文件名前面都可以带数字表示顺序。
 
 扔.tex文件进去可以直接include进去。
+
+# Others
+
+访问 <http://riat.re/T/latest.pdf> 可以获取对应Repo里最新版本的pdf。
+/T/下面也保存了历史版本的编译结果。
