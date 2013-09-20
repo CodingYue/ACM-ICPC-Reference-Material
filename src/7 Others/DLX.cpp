@@ -2,11 +2,7 @@ const int MAXINT = 0x7FFFFFFF;
 
 struct DLXNODE
 {
-	union
-	{
-		int S;
-		DLXNODE* C;
-	};
+	union { int S; DLXNODE* C; };
 	int Row;
 	DLXNODE *U,*D,*L,*R;
 };
@@ -46,14 +42,12 @@ int resume(DLXNODE* c)
 	{
 		for(DLXNODE* j = i->L;j != i;j = j->L)
 		{
-			j->U->D = j;
-			j->D->U = j;
+			j->U->D = j->D->U = j;
 			j->C->S++;
 		}
 	}
 
-	c->L->R = c;
-	c->R->L = c;
+	c->L->R = c->R->L = c;
 	return 0;
 }
 
@@ -75,20 +69,14 @@ bool dfs(int k)
 			tc = i;
 		}
 	}
-	if(ts == MAXINT) return true;
+	if(ts == MAXINT) return true; // useless
 	remove(tc);
 	for(DLXNODE* i = tc->U;i != tc;i = i->U)
 	{
 		ans[k] = i->Row; // store state here
-		for(DLXNODE* j = i->R;j != i;j = j->R)
-		{
-			remove(j->C);
-		}
+		for(DLXNODE* j = i->R;j != i;j = j->R) remove(j->C);
 		if(dfs(k+1)) return true;
-		for(DLXNODE* j = i->L;j != i;j = j->L)
-		{
-			resume(j->C);
-		}
+		for(DLXNODE* j = i->L;j != i;j = j->L) resume(j->C);
 	}
 	resume(tc);
 	return false;
@@ -147,7 +135,6 @@ int main(void)
 				for(int k = s;k <= e;k++)
 				{
 					int b = (i/3)*3+j/3;
-
 					int RowNo = i*9*9+j*9+k-1;
 
 					DLXNODE* ln = NULL;
@@ -171,4 +158,3 @@ int main(void)
 	}
 	return 0;
 }
-
