@@ -1,9 +1,9 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage[fleqn]{amsmath}
 \usepackage{fontspec,xunicode,xltxtra}
-\usepackage{indentfirst}
-\usepackage[BoldFont,SlantFont]{xeCJK}
+% \usepackage{indentfirst}
+\usepackage[indentfirst=false,BoldFont,SlantFont]{xeCJK}
+\usepackage[fleqn]{amsmath}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{listings}
@@ -67,7 +67,7 @@
 
 \titlespacing{\section}{0pt}{0pt}{1em}
 \titlespacing{\subsection}{0pt}{0pt}{0.5em}
-\titlespacing{\subsubsection}{0pt}{0.25em}{0.1em}
+\titlespacing*{\subsubsection}{0pt}{0.25em}{0.1em}
 
 % main font of code, Liberation Mono looks pretty good
 % \newfontfamily{\monotype}{Liberation Mono}
