@@ -1,4 +1,4 @@
-<TeX>$n$需要为2的次幂，sign传入1时正变换，传入-1时逆变换，逆变换后需要手动除以$n$。</TeX>
+<TeX>$n$需要为2的次幂，sign传入1时正变换，-1时逆变换，逆变换后需要手动除以$n$。</TeX>
 typedef complex<double> cplx;
 inline unsigned int intrev(unsigned x)
 {

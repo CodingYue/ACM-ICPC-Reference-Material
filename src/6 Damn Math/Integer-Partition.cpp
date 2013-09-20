@@ -1,10 +1,10 @@
 <TeX>
-	整数划分.
+	整数划分。
 	五边形数 $\frac{3j^{2}-j}{2}$
 	
-	generate function $\prod\limits_{n=1}^{\infty} 1+x^n+x^{2n}+x^{3n}+\dots = \prod\limits_{n=1}^{\infty} \frac{1}{1-x^{n}} $
+	Generate function $\prod\limits_{n=1}^{\infty} 1+x^n+x^{2n}+x^{3n}+\dots = \prod\limits_{n=1}^{\infty} \frac{1}{1-x^{n}} $
 
-	$ \prod\limits_{n=1}^\infty (1-x^n)=\sum\limits_{k=-\infty}^\infty(-1)^kx^{k(3k-1)/2}=\sum\limits_{k=0}^\infty(-1)^kx^{k(3k\pm 1)/2} $\\
+	$ \prod\limits_{n=1}^\infty (1-x^n)=\sum\limits_{k=-\infty}^\infty(-1)^kx^{k(3k-1)/2}=\sum\limits_{k=0}^\infty(-1)^kx^{k(3k\pm 1)/2} $ 
 </TeX>
 
 void parition(int n) {
