@@ -61,7 +61,7 @@ bool dfs(int k)
 {
 	if(H.R == &H)
 	{
-		// found!
+		// found! add custom handler here.
 		return true;
 	}
 
@@ -125,10 +125,7 @@ int main(void)
 		PoolTop = 0;
 		memset(ans,0,sizeof(ans));
 
-		H.L = &H;
-		H.R = &H;
-		H.D = &H;
-		H.U = &H;
+		H.L = H.R = H.U = H.D = &H;
 		DLXNODE* cFind[324] = {0};
 		DLXNODE* last = &H;
 		for(int i = 0;i < 324;i++)
@@ -136,12 +133,9 @@ int main(void)
 			DLXNODE* tn = node_alloc();
 			cFind[i] = tn;
 			tn->S = 0;
-			tn->D = tn;
-			tn->U = tn;
-			tn->L = last;
-			tn->R = last->R;
-			last->R->L = tn;
-			last->R = tn;
+			tn->D = tn->U = tn;
+			tn->L = last; tn->R = last->R;
+			last->R->L = tn; last->R = tn;
 			last = tn;
 		}
 		for(int i = 0;i < 9;i++)
@@ -149,10 +143,7 @@ int main(void)
 			for(int j = 0;j < 9;j++)
 			{
 				int s = 1; int e = 9;
-				if(Scene[i*9+j] != '.')
-				{
-					s = e = Scene[i*9+j]-'0';
-				}
+				if(Scene[i*9+j] != '.') s = e = Scene[i*9+j]-'0';
 				for(int k = s;k <= e;k++)
 				{
 					int b = (i/3)*3+j/3;
