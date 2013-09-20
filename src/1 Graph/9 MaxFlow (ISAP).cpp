@@ -9,7 +9,7 @@ const int INF = 0x7FFFFFFF;
 struct ARC
 {
 	int y,c;
-	ARC* Next,R;
+	ARC* Next,*R;
 };
 
 ARC APool[MAXM*2];
