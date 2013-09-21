@@ -95,6 +95,26 @@ bool onCir(Point p1, Point p2, Point p3, Point p4) {
 	Point c = ccenter(p1, p2, p3);
 	return abs((c - p1).len2() - (c - p4).len2()) < eps;
 }
+//两圆公切线, 先返回内公切线, 后面是外公切线
+vector<Line> getLineCC(Point c1, double r1, Point c2, double r2) {
+	vector<Line> res;
+	double d = (c1 - c2).len();
+	if (fabs(d - r1 - r2) < eps) {
+		Point o = (c1 + c2) * 0.5;
+		res.push_back(Line(o, o + (c1 - c2).rot90()));
+		res.push_back(res[res.size() - 1]);
+	} else {
+		double ang = acos((r1 + r2) / d);
+		res.push_back(Line(c1 + ((c2 - c1) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d)).rot(ang)));
+		ang = -ang;
+		res.push_back(Line(c1 + ((c2 - c1) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d)).rot(ang)));
+	}
+	double ang = acos((r2 - r1) / d);
+	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d).rot(ang))));
+	ang = -ang;
+	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d).rot(ang))));
+	return res;
+}
 
 // 空间几何
 
