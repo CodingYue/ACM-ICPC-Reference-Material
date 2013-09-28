@@ -64,7 +64,7 @@ vector<Point> getCL(Point c, double r, Point p1, Point p2) {
 // 圆与圆的交点
 vector<Point> getCC(Point c1, double r1, Point c2, double r2) {
 	vector<Point> res;
-	double x = (c1 - c2).len();
+	double x = (c1 - c2).len2();
 	double y = ((r1 * r1 - r2 * r2) / x + 1) / 2;
 	double d = r1 * r1 / x - y * y;
 	if (d < -eps) return res;
