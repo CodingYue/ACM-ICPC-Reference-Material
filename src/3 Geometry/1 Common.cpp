@@ -70,7 +70,7 @@ vector<Point> getCC(Point c1, double r1, Point c2, double r2) {
 	if (d < -eps) return res;
 	if (d < 0) d = 0;
 	Point q1 = c1 + (c2 - c1) * y;
-	Point q2 = ((c2 - c1) * mul(sqrt(d))).rot90();
+	Point q2 = ((c2 - c1) * sqrt(d)).rot90();
 	res.push_back(q1 - q2);
 	res.push_back(q1 + q2);
 	return res;
