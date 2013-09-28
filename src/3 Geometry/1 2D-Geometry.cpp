@@ -1,5 +1,22 @@
-const double eps = 1e-8;
-inline double dcmp(double x) { return x < -eps ? -1 : x > eps; }
+struct Point {
+	double x, y;
+	Point (){}
+	Point(double x, double y) : x(x), y(y) {}
+	Point operator - (const Point &b) { return Point(x - b.x, y - b.y); }
+	Point operator + (const Point &b) { return Point(x + b.x, y + b.y); }
+	Point operator * (const double &b) { return Point(x * b, y * b); }
+	Point rot90() { return Point(-y, x); }
+	Point rot(double ang) { return Point(x * cos(ang) - y * sin(ang), x * sin(ang) + y * cos(ang)); }
+	double operator * (const Point &b) { return x * b.y - y * b.x; }
+	double operator % (const Point &b) { return x * b.x + y * b.y; }
+	double len2() { return x * x + y * y; }
+	double len() { return sqrt(x * x + y * y); }
+};
+struct Line {
+	Point s, e;
+	Line(){}
+	Line(Point s, Point e) : s(s), e(e) {}
+};
 inline double xmul(Point a, Point b, Point c) {
 	return (c - a) * (c - b);
 }
@@ -16,7 +33,7 @@ double dis_Seg_P(Point p1, Point p2, Point q) {
 	return disLP(p1, p2, q);
 }
 // hit on the edge will return true
-bool is_segment_intersect(const Point& A,const Point& B,const Point& C,const Point& D) {
+bool is_segment_intersect(Point A, Point B, Point C,Point D) {
 	if(max(C.x,D.x) < min(A.x,B.x) || max(C.y,D.y) < min(A.y,B.y)) return false;
 	if(max(A.x,B.x) < min(C.x,D.x) || max(A.y,B.y) < min(C.y,D.y)) return false;
 	if(dcmp((B-A)*(C-A))*dcmp((B-A)*(D-A)) > 0) return false;
@@ -24,7 +41,7 @@ bool is_segment_intersect(const Point& A,const Point& B,const Point& C,const Poi
 	return true;
 }
 //两直线交点
-Point get_intersect(Line s1, Line s2) {
+Point get_intersect(Line s1, Line s2) { 
 	double u = xmul(s1.s, s1.e, s2.s);
 	double v = xmul(s1.e, s1.s, s2.e);
 	Point t;
@@ -33,7 +50,7 @@ Point get_intersect(Line s1, Line s2) {
 	return t;
 }
 // 点P 是否在直线{p1, p2} 上
-bool is_point_onseg(const Point& p1,const Point& p2,const Point& P)
+bool is_point_onseg(Point p1,Point p2,Point P)
 {
 	if(! (min(p1.x,p2.x) <= P.x && P.x <= max(p1.x,p2.x) &&
 		  min(p1.y,p2.y) <= P.y && P.y <= max(p1.y,p2.y)) )
@@ -43,12 +60,10 @@ bool is_point_onseg(const Point& p1,const Point& p2,const Point& P)
 }
 // 点q 到直线{p1, p2} 垂足
 Point proj(Point p1, Point p2, Point q) {
-	double d = (q2 - q1) * (p2 - p1);
-	//if (abs(d) < eps) return NULL;
-	return p1 + ((p2 - p1) * ((q2 - q1) * (q1 - p1))) / d;
+	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).len()));
 }
 // 直线与圆的交点
-vector<Point> getCL(Point c, double r, Point p1, Point p2) {
+vector<Point> getCL(Point c, double r, Point p1, Point p2) { 
 	vector<Point> res;
 	double x = (p1 - c) % (p2 - p1);
 	double y = (p2 - p1).len2();
@@ -62,7 +77,7 @@ vector<Point> getCL(Point c, double r, Point p1, Point p2) {
 	return res;
 }
 // 圆与圆的交点
-vector<Point> getCC(Point c1, double r1, Point c2, double r2) {
+vector<Point> getCC(Point c1, double r1, Point c2, double r2) { 
 	vector<Point> res;
 	double x = (c1 - c2).len2();
 	double y = ((r1 * r1 - r2 * r2) / x + 1) / 2;
@@ -79,7 +94,7 @@ vector<Point> getCC(Point c1, double r1, Point c2, double r2) {
 double areaCC(Point c1, double r1, Point c2, double r2) {
 	double d = (c1 - c2).len();
 	if (r1 + r2 < d + eps) return 0;
-	if (d < abs(r1 - r2) + eps) {
+	if (d < fabs(r1 - r2) + eps) {
 		double r = min(r1, r2);
 		return r * r * pi;
 	}
@@ -93,7 +108,7 @@ double areaCC(Point c1, double r1, Point c2, double r2) {
 bool onCir(Point p1, Point p2, Point p3, Point p4) {
 	if (fabs((p2 - p1) * (p3 - p1)) < eps) return true;
 	Point c = ccenter(p1, p2, p3);
-	return abs((c - p1).len2() - (c - p4).len2()) < eps;
+	return fabs((c - p1).len2() - (c - p4).len2()) < eps;
 }
 //两圆公切线, 先返回内公切线, 后面是外公切线
 vector<Line> getLineCC(Point c1, double r1, Point c2, double r2) {
@@ -110,44 +125,8 @@ vector<Line> getLineCC(Point c1, double r1, Point c2, double r2) {
 		res.push_back(Line(c1 + ((c2 - c1) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d)).rot(ang)));
 	}
 	double ang = acos((r2 - r1) / d);
-	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d).rot(ang))));
+	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2).rot(ang) * (r2 / d))));
 	ang = -ang;
-	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2) * (r2 / d).rot(ang))));
-	return res;
-}
-
-// 空间几何
-
-// 返回直线{p1, p2} 上到{q1, q2} 的最近点
-// 平行时 d = 0 
-Point getLL(Point p1, Point p2, Point q1, Point q2) {
-	Point p = q1 - p1;
-	Point u = p2 - p1;
-	Point v = q2 - q1;
-	//len2 means len^2
-	double d = u.len2() * v.len2() - (u % v) * (u % v);
-	//if (abs(d) < eps) return NULL;
-	double s = ((p % u) * v.len2() - (p % v) * (u % v)) / d;
-	return p1 + u * s;
-}
-// 面与线的交点, d = 0 时线在面上或与面平行
-// p 为面上某点, o是平面法向量. {q1, q2} 是直线.
-Point Plane_Line(Point p, Point o, Point q1, Point q2) {
-	double a = o % (q2 - p);
-	double b = o % (q1 - p);
-	double d = a - b;
-	//if (abs(d) < eps) return NULL;
-	return ((q1 * a) - (q2 * b)) / d;
-}
-// 平面与平面的交线
-vector<Point> getFF(Point p1, Point o1, Point p2, Point o2) {
-	vector<Point> res;
-	Point e = o1 * o2;
-	Point v = o1 * e;
-	double d = o2 % v;
-	if (abs(d) < eps) return res;
-	Point q = p1 + v * ((o2 % (p1 - p1)) / d);
-	res.push_back(q);
-	res.push_back(q + e);
+	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2).rot(ang) * (r2 / d))));
 	return res;
 }
