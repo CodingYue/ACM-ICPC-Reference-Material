@@ -1,14 +1,14 @@
 int Level[MaxN], Queue[MaxN];
 int LRPair[MaxN], Vis[MaxN], RLPair[MaxN];
-int visuAiDiCha = 0;
-vector<int> egz[MaxN];
+int visidx = 0;
+vector<int> edges[MaxN];
 
 int dfs(int u) {
-	Vis[u] = visuAiDiCha;
-	for (vector<int> :: iterator it = egz[u].begin(); it != egz[u].end(); ++it) {
+	Vis[u] = visidx;
+	for (vector<int> :: iterator it = edges[u].begin(); it != edges[u].end(); ++it) {
 		int v = *it;
 		int w = RLPair[v];
-		if(w == -1 || (Vis[w] != visuAiDiCha && Level[u] < Level[w] && dfs(w))) {
+		if(w == -1 || (Vis[w] != visidx && Level[u] < Level[w] && dfs(w))) {
 			LRPair[u] = v;
 			RLPair[v] = u;
 			return true;
@@ -33,7 +33,7 @@ int hopcroftKarp(int n, int m) {
 		while(qf < qe) {
 			int u = Queue[qf++];
 
-			for (vector<int> :: iterator it = egz[u].begin(); it != egz[u].end(); ++it) {
+			for (vector<int> :: iterator it = edges[u].begin(); it != edges[u].end(); ++it) {
 				int v = *it;
 				int rev = RLPair[v];
 				if(rev != -1 && Level[rev] < 0) {
@@ -42,7 +42,7 @@ int hopcroftKarp(int n, int m) {
 				}
 			}
 		}
-		visuAiDiCha++;
+		visidx++;
 		int d = 0;
 		for(int i = 1;i <= n;i++) if(LRPair[i] == -1 && dfs(i)) d++;
 		if(d == 0) return match;
