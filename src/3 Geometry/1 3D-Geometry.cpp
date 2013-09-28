@@ -26,7 +26,7 @@ Point getLL(Point p1, Point p2, Point q1, Point q2) {
 }
 // 面与线的交点, d = 0 时线在面上或与面平行
 // p 为面上某点, o是平面法向量. {q1, q2} 是直线.
-Point Plane_Line(Point p, Point o, Point q1, Point q2) {
+Point getPL(Point p, Point o, Point q1, Point q2) {
 	double a = o % (q2 - p);
 	double b = o % (q1 - p);
 	double d = a - b;

@@ -25,7 +25,6 @@ double disLP(Point p1, Point p2, Point q) {
 	return fabs((p1 - q) * (p2 - q)) / (p1 - p2).len();
 }
 // 平面几何
-
 // 点q 到线段{p1, p2} 的距离
 double dis_Seg_P(Point p1, Point p2, Point q) {
 	if ((p2 - p1) % (q - p1) < eps) return (q - p1).len();
