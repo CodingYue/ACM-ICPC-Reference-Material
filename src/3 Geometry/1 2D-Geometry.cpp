@@ -75,8 +75,8 @@ vector<Point> getCL(Point c, double r, Point p1, Point p2) {
 	if (d < 0) d = 0;
 	Point q1 = p1 - ((p2 - p1) * (x / y));
 	Point q2 = (p2 - p1) * (sqrt(d) / y);
-	res.push_back(q1 - q2);
 	res.push_back(q1 + q2);
+	res.push_back(q1 - q2);
 	return res;
 }
 // 圆与圆的交点
