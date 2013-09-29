@@ -47,6 +47,8 @@ double solve(int cur, int n) {
 	for (int i = 0; i < m; ++i) {
 		cnt += keys[i].second;
 		if (cnt == 0) res += cal(cir[cur].c, cir[cur].r, keys[i].first, keys[i+1].first);
+		// area[cover[cur] + cnt] -= tarea;
+		// area[cover[cnr] + cnt + 1] += tarea;
 	}
 	return res;
 }

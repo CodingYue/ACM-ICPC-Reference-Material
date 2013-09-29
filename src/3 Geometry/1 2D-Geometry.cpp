@@ -1,3 +1,6 @@
+<TeX>
+	eps 设置成$1e-8$
+</TeX>
 struct Point {
 	double x, y;
 	Point (){}
@@ -7,6 +10,7 @@ struct Point {
 	Point operator * (const double &b) { return Point(x * b, y * b); }
 	Point rot90() { return Point(-y, x); }
 	Point rot(double ang) { return Point(x * cos(ang) - y * sin(ang), x * sin(ang) + y * cos(ang)); }
+	double ang() { double res = atan2(y, x); if (dcmp(res) < 0) res += pi * 2; return res; }
 	double operator * (const Point &b) { return x * b.y - y * b.x; }
 	double operator % (const Point &b) { return x * b.x + y * b.y; }
 	double len2() { return x * x + y * y; }
