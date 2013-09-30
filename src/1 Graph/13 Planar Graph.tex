@@ -1,0 +1,11 @@
+\subsubsection{Euler Characteristic}
+$$ \chi = V-E+F $$
+其中，V为点数，E为边数，F为面数，对于平面图即为划分成的平面数（包含外平面），
+$ \chi $为对应的欧拉示性数，对于平面图有 $ \chi = C + 1 $，C为连通块个数。
+
+\subsubsection{Dual Graph}
+将原图中所有平面区域作为点，每条边若与两个面相邻则在这两个面之间连一条边，只与一个面相邻连个自环，若有权值(容量)保留。
+
+\subsubsection{Maxflow on Planar Graph}
+连接s和t，显然不影响图的平面性，转对偶图，令原图中s和t连接产生的新平面在对偶图中对应的节点为s'，外平面对应的顶点为t'，删除s'和t'之间直接相连的边。
+此时s'到t'的一条最短路就对应了原图上s到t的一个最大流。
