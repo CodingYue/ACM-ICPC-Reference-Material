@@ -3,13 +3,11 @@ ull PollardRho(ull n,int c)
 	ull x = 2;
 	ull y = 2;
 	ull d = 1;
-	//printf("%d\n",c);
 	while(d == 1)
 	{
 		x = (mulmod(x,x,n)+c)%n;
 		y = (mulmod(y,y,n)+c)%n;
 		y = (mulmod(y,y,n)+c)%n;
-		//printf("%I64u %I64u %I64u\n",x,y,d);
 
 		if(x > y) d = gcd(x-y,n);
 		else d = gcd(y-x,n);
