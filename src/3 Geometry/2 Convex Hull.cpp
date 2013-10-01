@@ -1,6 +1,6 @@
 // P is input and Hull is output.
 // return point count on hull
-int Graham(POINT* P,POINT* Hull,int n)
+int Graham(Point* P,Point* Hull,int n)
 {
 	sort(P,P+n);
 	int HTop = 0;
