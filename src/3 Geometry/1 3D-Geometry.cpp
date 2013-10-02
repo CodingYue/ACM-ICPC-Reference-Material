@@ -45,3 +45,14 @@ vector<Point> getFF(Point p1, Point o1, Point p2, Point o2) {
 	res.push_back(q + e);
 	return res;
 }
+// 射线p1, p2 与球(c,r)的p与p1的距离. 不相交返回-1.
+double get(Point c, double r, Point p1, Point p2) {
+	if ((p2 - p1) % (c - p1) < -eps) return -1.;
+	Point v = (p2 - p1); v = v * (1 / v.len());
+	double x = (c - p1) % v;
+	v = p1 + v * x;
+	double d = (v - c).len2();
+	if (dcmp(d - r * r) >= 0) return -1.;
+	d = (p1 - v).len() - sqrt(r * r - d);
+	return d;
+}
