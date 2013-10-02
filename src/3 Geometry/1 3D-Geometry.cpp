@@ -25,7 +25,7 @@ Point getLL(Point p1, Point p2, Point q1, Point q2) {
 	return p1 + u * s;
 }
 // 面与线的交点, d = 0 时线在面上或与面平行
-// p 为面上某点, o是平面法向量. {q1, q2} 是直线.
+// p 为面上某点, o 是平面法向量. {q1, q2} 是直线.
 Point getPL(Point p, Point o, Point q1, Point q2) {
 	double a = o % (q2 - p);
 	double b = o % (q1 - p);
@@ -45,7 +45,7 @@ vector<Point> getFF(Point p1, Point o1, Point p2, Point o2) {
 	res.push_back(q + e);
 	return res;
 }
-// 射线p1, p2 与球(c,r)的p与p1的距离. 不相交返回-1.
+// 射线p1, p2 与球(c,r) 的p 与p1 的距离. 不相交返回-1.
 double get(Point c, double r, Point p1, Point p2) {
 	if ((p2 - p1) % (c - p1) < -eps) return -1.;
 	Point v = (p2 - p1); v = v * (1 / v.len());
