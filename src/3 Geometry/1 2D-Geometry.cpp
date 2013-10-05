@@ -5,6 +5,7 @@ struct Point {
 	Point operator - (const Point &b) { return Point(x - b.x, y - b.y); }
 	Point operator + (const Point &b) { return Point(x + b.x, y + b.y); }
 	Point operator * (const double &b) { return Point(x * b, y * b); }
+	Point operator / (const double &b) { return POint(x / b, y / b); }
 	Point rot90(int t) { return Point(-y, x) * t; }
 	Point rot(double ang) { return Point(x * cos(ang) - y * sin(ang), x * sin(ang) + y * cos(ang)); }
 	double ang() { double res = atan2(y, x); if (dcmp(res) < 0) res += pi * 2; return res; }
