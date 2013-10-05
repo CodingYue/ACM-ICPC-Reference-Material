@@ -1,6 +1,3 @@
-<TeX>
-	eps 设置成$1e-8$
-</TeX>
 struct Point {
 	double x, y;
 	Point (){}
@@ -8,7 +5,7 @@ struct Point {
 	Point operator - (const Point &b) { return Point(x - b.x, y - b.y); }
 	Point operator + (const Point &b) { return Point(x + b.x, y + b.y); }
 	Point operator * (const double &b) { return Point(x * b, y * b); }
-	Point rot90() { return Point(-y, x); }
+	Point rot90(int t) { return Point(-y, x) * t; }
 	Point rot(double ang) { return Point(x * cos(ang) - y * sin(ang), x * sin(ang) + y * cos(ang)); }
 	double ang() { double res = atan2(y, x); if (dcmp(res) < 0) res += pi * 2; return res; }
 	double operator * (const Point &b) { return x * b.y - y * b.x; }
@@ -75,8 +72,8 @@ vector<Point> getCL(Point c, double r, Point p1, Point p2) {
 	if (d < 0) d = 0;
 	Point q1 = p1 - ((p2 - p1) * (x / y));
 	Point q2 = (p2 - p1) * (sqrt(d) / y);
-	res.push_back(q1 + q2);
 	res.push_back(q1 - q2);
+	res.push_back(q1 + q2);
 	return res;
 }
 // 圆与圆的交点
@@ -132,4 +129,24 @@ vector<Line> getLineCC(Point c1, double r1, Point c2, double r2) {
 	ang = -ang;
 	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2).rot(ang) * (r2 / d))));
 	return res;
+}
+//圆 [(0,0), r] 与三角形 (0, p1, p2) 求公共面积
+double rad(Point p1, Point p2) {
+	double res = p2.ang() - p1.ang();
+	if (res > pi - eps) res -= 2.0 * pi;
+	else if (res + eps < -pi) res += 2.0 * pi;
+	return res;
+}
+double areaCT(double r, Point p1, Point p2) {
+	vector<Point> qs = getCL(Point(0,0), r, p1, p2);
+	if (qs.size() == 0) return r * r * rad(p1, p2) / 2;
+	bool b1 = p1.len() > r + eps, b2 = p2.len() > r + eps;
+	if (b1 && b2) {
+		if ((p1 - qs[0]) % (p2 - qs[0]) < eps &&
+			(p1 - qs[1]) % (p2 - qs[1]) < eps) 
+		return (r * r * (rad(p1, p2) - rad(qs[0], qs[1])) + qs[0] * qs[1]) / 2;
+		else return r * r * rad(p1, p2) / 2;
+	} else if (b1) return (r * r * rad(p1, qs[0]) + qs[0] * p2) / 2;
+	else if (b2) return (r * r * rad(qs[1], p2) + p1 * qs[1]) / 2;
+	else return p1 * p2 / 2;
 }
