@@ -50,7 +50,7 @@ Point get_intersect(Line s1, Line s2) {
 	t.y = (s2.s.y * v + s2.e.y * u) / (u + v);
 	return t;
 }
-// 点P 是否在直线{p1, p2} 上
+// 点P 是否在线段 {p1, p2} 上
 bool is_point_onseg(Point p1,Point p2,Point P)
 {
 	if(! (min(p1.x,p2.x) <= P.x && P.x <= max(p1.x,p2.x) &&
@@ -59,7 +59,7 @@ bool is_point_onseg(Point p1,Point p2,Point P)
 	if(dcmp((P-p1)*(p2-p1)) == 0) return true;
 	return false;
 }
-// 点q 到直线{p1, p2} 垂足
+// 点q 到直线 {p1, p2} 垂足
 Point proj(Point p1, Point p2, Point q) {
 	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).len()));
 }
