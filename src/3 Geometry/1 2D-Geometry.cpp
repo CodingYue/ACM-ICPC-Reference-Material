@@ -20,7 +20,7 @@ struct Line {
 	Line(Point s, Point e) : s(s), e(e) {}
 };
 inline double xmul(Point a, Point b, Point c) {
-	return (c - a) * (c - b);
+	return (b - a) * (c - a);
 }
 //点p 到直线{p1, p2} 距离
 double disLP(Point p1, Point p2, Point q) {
