@@ -7,7 +7,6 @@ double RC(int N)
 	for(int i = 0;i < N;i++)
 	{
 		while((Hull[i+1]-Hull[i])*(Hull[to]-Hull[i]) < (Hull[i+1]-Hull[i])*(Hull[to+1]-Hull[i])) to = (to+1)%N;
-		//ans = max(ans,maxarea(i,to,N));
 		ans = max(ans,(Hull[i]-Hull[to]).hypot2());
 		ans = max(ans,(Hull[i+1]-Hull[to]).hypot2());
 	}

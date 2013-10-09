@@ -9,7 +9,7 @@ struct Segment {
 		: s(s), e(e) {
 			angle = atan2(e.y - s.y, e.x - s.x);
 		}
-} segment[MaxN], seg[MaxN];
+} ;
 Point get_intersect(Segment s1, Segment s2) {
 	double u = xmul(s1.s, s1.e, s2.s);
 	double v = xmul(s1.e, s1.s, s2.e);
@@ -27,7 +27,7 @@ bool IsParallel(Segment P, Segment Q) {
 	return dcmp((P.e - P.s) * (Q.e - Q.s)) == 0;
 }
 Segment deq[MaxN];
-int HalfPlaneIntersect(Segment seg[], int n) {
+int HalfPlaneIntersect(Segment seg[], int n, Point hull[]) {
 	sort(seg, seg + n, cmp);
 	int tmp = 1;
 	for (int i = 1; i < n; ++i) {
@@ -36,7 +36,6 @@ int HalfPlaneIntersect(Segment seg[], int n) {
 		}
 	}
 	n = tmp;
-	//for (int i = 0; i < n; ++i) printf("%.0lf %.0lf %.0lf %.0lf\n", seg[i].s.x, seg[i].s.y, seg[i].e.x, seg[i].e.y);
 	deq[0] = seg[0]; deq[1] = seg[1];
 	int front = 0, tail = 1;
 	for (int i = 2; i < n; ++i) {
@@ -49,6 +48,6 @@ int HalfPlaneIntersect(Segment seg[], int n) {
 	while(front < tail && xmul(deq[tail].s, deq[tail].e, get_intersect(deq[front], deq[front+1])) < -eps) front++;
 	int cnt = 0;
 	deq[++tail] = deq[front];
-	for (int i = front; i + 1 < tail; ++i) p[cnt++] = get_intersect(deq[i], deq[i+1]);
+	for (int i = front; i < tail; ++i) hull[cnt++] = get_intersect(deq[i], deq[i+1]);
 	return cnt;
 }
