@@ -4,6 +4,9 @@
 	Find such $x$ that $x^2 \equiv n \pmod p$
 </TeX>
 int find_root(int n, int p) {
+	n %= p;
+	if (n == 0) return 0;
+	if (fpow(n, (p - 1) / 2, p) != 1) return -1;
 	int Q = p - 1, S = 0;
 	for (; Q % 2 == 0; Q >>= 1) ++S;
 	if (S == 1) return fpow(n, (p + 1) / 4, p);
