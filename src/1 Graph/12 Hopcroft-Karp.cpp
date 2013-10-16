@@ -1,3 +1,4 @@
+// 注意刷edges
 int Level[MaxN], Queue[MaxN];
 int LRPair[MaxN], Vis[MaxN], RLPair[MaxN];
 int visidx = 0;
