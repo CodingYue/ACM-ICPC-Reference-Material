@@ -7,7 +7,7 @@ struct Point {
 	Point operator - (const Point &b) { return Point(x - b.x, y - b.y, z - b.y); }
 	Point operator * (const Point &b) { return Point(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.z); }
 	Point operator * (const double &b) { return Point(x * b, y * b, z * b); }
-	double operator % (const Point &b) { return x * x + y * y + z * z; }
+	double operator % (const Point &b) { return x * b.x + y * b.y + z * b.z; }
 	double len2() { return x * x + y * y + z * z; }
 	double len() { return sqrt(x * x + y * y + z * z); }
 
