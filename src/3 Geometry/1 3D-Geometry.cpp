@@ -4,7 +4,7 @@ struct Point {
 	Point(){}
 	Point(double x, double y, double z) : x(x), y(y), z(z) {}
 	Point operator + (const Point &b) { return Point(x + b.x, y + b.y, z + b.z); }
-	Point operator - (const Point &b) { return Point(x - b.x, y - b.y, z - b.y); }
+	Point operator - (const Point &b) { return Point(x - b.x, y - b.y, z - b.z); }
 	Point operator * (const Point &b) { return Point(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x); }
 	Point operator * (const double &b) { return Point(x * b, y * b, z * b); }
 	double operator % (const Point &b) { return x * b.x + y * b.y + z * b.z; }
