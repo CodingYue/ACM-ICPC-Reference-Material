@@ -18,7 +18,7 @@ namespace BSGS {
 		}
 	}Hash;
 	void build(int y, int p){
-		m = 700000; int now = 1;
+		int m = 700000, now = 1;
 		for (int i = 0; i <= m; ++i) {
 			Hash.ins(now,i);
 			now = (LL) now * y % p;
