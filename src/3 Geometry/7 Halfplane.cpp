@@ -19,7 +19,7 @@ Point get_intersect(Segment s1, Segment s2) {
 	return t;
 }
 bool cmp(Segment a, Segment b) {
-	if (dcmp(a.angle - b.angle) == 0) return dcmp(xmul(a.s, a.e, b.s)) > 0;
+	if (dcmp(a.angle - b.angle) == 0) return dcmp(xmul(a.s, a.e, b.s)) < 0;
 	return dcmp(a.angle - b.angle) < 0;
 	return 0;
 }
