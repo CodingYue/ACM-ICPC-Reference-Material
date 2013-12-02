@@ -72,5 +72,5 @@ memset(idom,-1,sizeof(idom[0])*(n+10));
 memset(vis,0,sizeof(vis[0])*(n+10));
 for(int i = 0;i < n;i++) bucket[i].clear();
 ncnt = 0;
-dfs(n-1);
+dfs(n-1); // n-1 is source
 calc_dominator_tree(ncnt);
