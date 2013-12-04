@@ -1,3 +1,4 @@
+<TeX>不掉精度的题可以试试，现在不太好用。自带持久化，改成非持久化小心写错。</TeX>
 #include <stdio.h>
 #include <string.h>
 #include <algorithm>
