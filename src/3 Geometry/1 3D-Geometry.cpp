@@ -40,7 +40,7 @@ vector<Point> getFF(Point p1, Point o1, Point p2, Point o2) {
 	Point v = o1 * e;
 	double d = o2 % v;
 	if (fabs(d) < eps) return res;
-	Point q = p1 + v * ((o2 % (p1 - p2)) / d);
+	Point q = p1 + v * ((o2 % (p2 - p1)) / d);
 	res.push_back(q);
 	res.push_back(q + e);
 	return res;
