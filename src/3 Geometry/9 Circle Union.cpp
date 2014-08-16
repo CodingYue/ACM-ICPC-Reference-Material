@@ -1,5 +1,5 @@
 <TeX>
-	圆的面积并. $area_i$表示恰好被覆盖i次的面积。普通面积并需要去除掉被包含或被内切的圆。eps 设成$1e-8$ 一定要对圆去重.
+	圆的面积并. 一定要对圆去重. $area_i$表示恰好被覆盖i次的面积。普通面积并需要去除掉被包含或被内切的圆。eps 设成$1e-8$
 </TeX>
 double cal(Point c, double r, double ang1, double ang2) {
 	double ang = ang2 - ang1;
