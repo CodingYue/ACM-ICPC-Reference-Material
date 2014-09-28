@@ -1,7 +1,7 @@
 <TeX>
 使用时注意，对于G++ 4.7.0以下版本自带的libstdc++，需要用null_mapped_type，以上使用null_type，注意不支持multi系，需要自行塞个pair。所有rank值都是0开始的。
 
-复杂度方面，pairing_heap的合并是$ O(1) $，其他方面thin_heap要好一点，注意thin_heap合并是$O(n)$，谨防被坑。
+复杂度方面，pairing_heap的合并是$ O(1) $，其他方面thin_heap要好一点，注意thin_heap合并是$O(n)$，并且带tree_order_statistics的join也是$O(n)$，谨防被坑。
 </TeX>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/priority_queue.hpp>

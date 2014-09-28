@@ -1,3 +1,7 @@
+// DecimalFormat if you want to output double with specific precision
+// FileInputStream if file is needed. FileReader, FileWriter?
+// new PrintWrite(new BufferedWriter(  ...
+
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 StringTokenizer tokenizer = null;
 
@@ -14,5 +18,5 @@ public String next()
 }
 
 public int nextInt() {
-	return Integer.parseInt(next()); // Double. .....
+	return Integer.parseInt(next()); // Double.parseDouble .....
 }
