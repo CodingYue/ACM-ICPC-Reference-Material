@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import re, os, sys, hashlib
+import re, os, sys, hashlib, subprocess
 
 # Improved Windows Support.
 
@@ -32,12 +32,17 @@ def gen_section(name, dirname):
 		index = int(match.group(2)) if match.group(1) else 99999
 		title = match.group(3)
 		extension = match.group(5)
+		orig_name = u"./%s/%s" % (dirname, src)
 
-		files.append( (index, title, extension, code) )
+		files.append( (index, title, extension, code, orig_name) )
 		
-	for (index, title, extension, code) in sorted(files):
+	for (index, title, extension, code, orig_name) in sorted(files):
 		#sect.append("\\subsection{%s}" % title)
+		isGenerator = False
 		title = title.replace('_','\\_')
+		if title.endswith('.generator'):
+			title = title[:-len('.generator')]
+			isGenerator = True
 		sect.append("\\subsection{%s}" % title.encode('utf-8'))
 
 		#for line in code.split("\n"):
@@ -45,6 +50,9 @@ def gen_section(name, dirname):
 		#	line_count += 1
 
 		if extension.lower() == 'tex':
+			sect.append(code)
+		elif isGenerator:
+			code = subprocess.check_output(['python', orig_name])
 			sect.append(code)
 		else:
 			code = code.strip()
