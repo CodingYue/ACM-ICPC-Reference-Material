@@ -52,7 +52,7 @@ def gen_section(name, dirname):
 		if extension.lower() == 'tex':
 			sect.append(code)
 		elif isGenerator:
-			code = subprocess.check_output(['python', orig_name])
+			code = subprocess.Popen(['python', orig_name]).read()
 			sect.append(code)
 		else:
 			code = code.strip()
