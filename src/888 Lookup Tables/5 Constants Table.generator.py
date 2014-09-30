@@ -17,6 +17,9 @@ limit_result: Similar to `limit` but works on `f(n)` instead of `n`.
 
 import math, sys
 from fractions import gcd
+def binom(n,k):
+	return math.factorial(n) / math.factorial(k) / math.factorial(n-k)
+
 C_TABLE_1 = {
 	"n_list": crange(2,12) + crange(15,30,5) + [40, 50, 70] ,
 	"sequences":[
@@ -32,7 +35,7 @@ C_TABLE_1 = {
 	},
 	{
 		"name": r"$\binom{n}{n/2}$",
-		"list": lambda n: math.factorial(n) / math.factorial(n//2) / math.factorial(n-n//2),
+		"list": lambda n: binom(n,n//2),
 		"limit_result": lambda x: len(str(x)) < 10
 	},
 	{
@@ -50,7 +53,28 @@ C_TABLE_1 = {
 	},]
 }
 
-C_TABLE = [C_TABLE_1,]
+def minRep(n):
+	f = [0] * (n+1)
+	f[1] = 1
+	for i in xrange(2,n+1):
+		f[i] = i ** n
+		for j in xrange(1,i): f[i] -= f[j] * binom(i,j)
+	ans = 0
+	for i in xrange(1,n+1): ans += f[i] / math.factorial(i)
+	return ans
+
+C_TABLE_2 = {
+	"n_list": crange(1,20), 
+	"sequences":[
+	{
+		"name": r"最小表示",
+		"list": minRep,
+		"limit_result": lambda x: len(str(x)) < 10
+	},
+	]
+}
+
+C_TABLE = [C_TABLE_1,C_TABLE_2,]
 # -----------------------------------------------------------
 
 def generate_table(tab):
