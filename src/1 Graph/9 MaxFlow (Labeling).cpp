@@ -3,20 +3,15 @@
 	对于一条边，如果他的两个点分属不同的连通分量且满流则这条边可属于网络的最小割。
 	
 	如果他的两个点分属不同的联通分量且满流且两个点分别和source，sink属于同一个连通分量，则这条边必属于最小割。
+
+	@Yuege: 请，一定，要，用，dfs，找割集。
 </TeX>
 const int MAXM = 1000000;
 const int MAXN = 25000;
 const int INF = 0x7FFFFFFF;
 
-struct ARC
-{
-	int y,c;
-	ARC* Next,*R;
-};
-
-ARC APool[MAXM*2];
-ARC* APTop = APool;
-ARC* Arc[MAXN];
+struct ARC { int y,c; ARC* Next,*R; };
+ARC APool[MAXM*2]; ARC* APTop = APool; ARC* Arc[MAXN];
 
 int insert_arc(int x,int y,int c,int rc=0)
 {
