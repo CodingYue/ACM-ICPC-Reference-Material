@@ -1,3 +1,5 @@
+<TeX>a、b是两个串，正常的0下标模式。n是长度。</TeX>
+
 int n, a[N << 1], b[N << 1];
 
 bool has(int i, int j) {

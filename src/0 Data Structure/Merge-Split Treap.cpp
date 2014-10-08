@@ -1,4 +1,4 @@
-<TeX>需要改成持久化的话每次修改的时候新建节点即可，然后去掉对fa的维护即可。必要的情况下在newNode里面加上GC。</TeX>
+<TeX>需要改成持久化的话每次修改的时候新建节点，然后去掉对fa的维护即可。必要的情况下在newNode里面加上GC。</TeX>
 struct TNODE
 {
 	int val,rd,size;

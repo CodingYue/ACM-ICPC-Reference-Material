@@ -1,28 +1,30 @@
 <TeX>
-一般图最大匹配模板 \\
-		g[i][j]存放邻接矩阵：i,j是否有边,match[i]存放i所匹配的点 \\
-		调用run(N)返回最大匹配，N为节点数. \\
-		</TeX>
-		const int MAXN = 55;
-		queue<int> Q;
-		bool g[MAXN][MAXN],inque[MAXN],inblossom[MAXN];  
-		int match[MAXN],pre[MAXN],base[MAXN];  
+一般图最大匹配
 
-		//公共祖先  
-		int findancestor(int u,int v){  
-			bool inpath[MAXN]={false};  
-			while(1){  
-				u=base[u];  
-				inpath[u]=true;  
-				if(match[u]==-1)break;  
-				u=pre[match[u]];  
-			}  
-			while(1){  
-				v=base[v];  
-				if(inpath[v])return v;  
-				v=pre[match[v]];  
-			}  
-		}  
+g[i][j]存放邻接矩阵：i,j是否有边，match[i]存放i所匹配的点
+
+调用run(N)返回最大匹配，N为节点数。
+</TeX>
+const int MAXN = 55;
+queue<int> Q;
+bool g[MAXN][MAXN],inque[MAXN],inblossom[MAXN];  
+int match[MAXN],pre[MAXN],base[MAXN];  
+
+//公共祖先  
+int findancestor(int u,int v){  
+	bool inpath[MAXN]={false};  
+	while(1){  
+		u=base[u];  
+		inpath[u]=true;  
+		if(match[u]==-1)break;  
+		u=pre[match[u]];  
+	}  
+	while(1){  
+		v=base[v];  
+		if(inpath[v])return v;  
+		v=pre[match[v]];  
+	}  
+}  
 
 //压缩花  
 void reset(int u,int anc){  

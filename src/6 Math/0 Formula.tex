@@ -39,3 +39,19 @@ $$p_k = \sum_{i = 1}^n{x_i^k}$$
 
 特别地，对于$$|\mathbf{A} - \lambda \mathbf{E}| = (-1)^n(a_n + a_{n - 1} \lambda + \cdots + a_1 \lambda^{n - 1} + a_0 \lambda^n)$$
 有$$p_k = \mathrm{Tr}(\mathbf{A}^k)$$
+
+\subsubsection{概率论}
+条件概率公式 $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
+贝叶斯定理 $$P(A|B) = \frac{P(B|A)\times P(A)}{P(B)}$$
+$$\int_{-\infty}^{\infty} p(x = t)tdt = \int_{-\infty}^{\infty} p(x >= t) dt$$
+
+\subsubsection{可重集组合}
+第$i$个物品有$m_i$种，从$n$个里面选$k$个的方案数。
+$$ x_{i,j} = x_{i-1,j} + x_{i,j-1} - x_{i-1,j-m_i-1} $$
+
+\subsubsection{Eulerian number}
+$ {1, \ldots ,n} $ 的排列，其中恰有$k$个位置的元素比前一个大的排列的数量。
+$$ E_{n,k} = (k+1)E_{n-1,k} + (n-k)E_{n-1,k-1} $$
+
+\subsubsection{威尔逊定理}
+$$(p-1)! \equiv -1 \mod p $$
