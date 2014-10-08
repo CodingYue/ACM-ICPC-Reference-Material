@@ -56,7 +56,7 @@ public:
 			x->suffLink = Root_Empty;
 		} else {
 			cur = cur->suffLink;
-			while(textLen-1-1-cur->len < 0 || text[textLen-1-1-cur->len] != text[textLen])
+			while(textLen-1-1-cur->len < 0 || text[textLen-1-1-cur->len] != ch)
 				cur = cur->suffLink;
 			x->suffLink = cur->child[ch];
 		}
