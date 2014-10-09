@@ -1,6 +1,5 @@
 <TeX>ARC定义参见Labeling做法的最大流。</TeX>
-class DinicMaxFlow
-{
+class DinicMaxFlow {
 public:
 	void reset() { memset(Arc,0,sizeof(Arc)); APTop = APool; }
 	DinicMaxFlow() { reset(); }
