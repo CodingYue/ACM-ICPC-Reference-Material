@@ -42,19 +42,19 @@ bool is_segment_intersect(Point A, Point B, Point C,Point D) {
 	return true;
 }
 //两直线交点
-Point get_intersect(Line s1, Line s2) { 
-	double u = xmul(s1.s, s1.e, s2.s);
-	double v = xmul(s1.e, s1.s, s2.e);
+Point get_intersect(Point a, Point b, Point c, Point d) {
+	double u = xmul(a, b, c);
+	double v = xmul(b, a, d);
 	Point t;
-	t.x = (s2.s.x * v + s2.e.x * u) / (u + v);
-	t.y = (s2.s.y * v + s2.e.y * u) / (u + v);
+	t.x = (c.x * v + d.x * u) / (u + v);
+	t.y = (c.y * v + d.y * u) / (u + v);
 	return t;
 }
 // 点P 是否在线段 {p1, p2} 上
 bool is_point_onseg(Point p1,Point p2,Point P)
 {
 	if(! (min(p1.x,p2.x) <= P.x && P.x <= max(p1.x,p2.x) &&
-		  min(p1.y,p2.y) <= P.y && P.y <= max(p1.y,p2.y)) )
+				min(p1.y,p2.y) <= P.y && P.y <= max(p1.y,p2.y)) )
 		return false;
 	if(dcmp((P-p1)*(p2-p1)) == 0) return true;
 	return false;
@@ -144,8 +144,8 @@ double areaCT(double r, Point p1, Point p2) {
 	bool b1 = p1.len() > r + eps, b2 = p2.len() > r + eps;
 	if (b1 && b2) {
 		if ((p1 - qs[0]) % (p2 - qs[0]) < eps &&
-			(p1 - qs[1]) % (p2 - qs[1]) < eps) 
-		return (r * r * (rad(p1, p2) - rad(qs[0], qs[1])) + qs[0] * qs[1]) / 2;
+				(p1 - qs[1]) % (p2 - qs[1]) < eps) 
+			return (r * r * (rad(p1, p2) - rad(qs[0], qs[1])) + qs[0] * qs[1]) / 2;
 		else return r * r * rad(p1, p2) / 2;
 	} else if (b1) return (r * r * rad(p1, qs[0]) + qs[0] * p2) / 2;
 	else if (b2) return (r * r * rad(qs[1], p2) + p1 * qs[1]) / 2;
