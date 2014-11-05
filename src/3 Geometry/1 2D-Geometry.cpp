@@ -14,11 +14,6 @@ struct Point {
 	double len2() { return x * x + y * y; }
 	double len() { return sqrt(x * x + y * y); }
 };
-struct Line {
-	Point s, e;
-	Line(){}
-	Line(Point s, Point e) : s(s), e(e) {}
-};
 inline double xmul(Point a, Point b, Point c) {
 	return (b - a) * (c - a);
 }
