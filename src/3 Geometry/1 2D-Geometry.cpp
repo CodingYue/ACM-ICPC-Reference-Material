@@ -58,6 +58,12 @@ bool is_point_onseg(Point p1,Point p2,Point P)
 Point proj(Point p1, Point p2, Point q) {
 	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).len()));
 }
+// 点q 到线段 {p1, p2} 的距离
+double dis_p_seg(Point q, Point p1, Point p2) {
+	double dis = fabs((p1 - q) * (p2 - q)) / (p1 - p2).len();
+	if (dcmp((q - p1) % (p2 - p1)) > 0 && dcmp((q - p2) % (p1 - p2)) > 0) return dis;
+	return min((q - p1).len(), (q - p2).len());
+}
 // 直线与圆的交点
 vector<Point> getCL(Point c, double r, Point p1, Point p2) { 
 	vector<Point> res;
@@ -124,6 +130,17 @@ vector<Line> getLineCC(Point c1, double r1, Point c2, double r2) {
 	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2).rot(ang) * (r2 / d))));
 	ang = -ang;
 	res.push_back(Line(c1 + ((c1 - c2) * (r1 / d)).rot(ang), c2 + ((c1 - c2).rot(ang) * (r2 / d))));
+	return res;
+}
+// 点和圆的公切线
+vector<Line> getLinePC(Point c, double r, Point p) {
+	vector<Line> res;
+	double d = (p-c).len();
+	if (dcmp(d-r) <= 0) return res;
+	double ang = asin(r/d);
+	Point v = (c-p) * (sqrt(d*d-r*r)/d);
+	res.push_back(Line(p, p + v.rot(-ang)));
+	res.push_back(Line(p, p + v.rot(ang)));
 	return res;
 }
 //圆 [(0,0), r] 与三角形 (0, p1, p2) 求公共面积
