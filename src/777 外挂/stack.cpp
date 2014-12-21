@@ -1,20 +1,7 @@
-<TeX>修改 esp 到手动分配的内存。
-慎用！可能违反某些规则或造成不必要的 RE/WA 。</TeX>
-int main(void)
-{
-	char* SysStack = NULL;
-	char* MyStack = new char[33554432];
-	MyStack += 33554432-1048576; // 32M
-	__asm__(
-		"movl %%esp,%%eax\n\t"
-		"movl %1,%%esp\n\t"
-		:"=a"(SysStack)
-		:"m"(MyStack)
-	);
-	mmain();
-	__asm__(
-		"movl %0,%%esp\n\t"
-		::"m"(SysStack)
-	);
+register char *_sp __asm__("esp"); // rsp / sp
+int main(void) {
+	const int size = 64*1024*1024;
+	static char *sys, *mine(new char[size]+size-4096);
+	sys = _sp; _sp = mine; mmain(); _sp = sys;
 	return 0;
 }
