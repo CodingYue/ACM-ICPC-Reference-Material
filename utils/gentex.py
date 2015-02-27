@@ -49,7 +49,9 @@ def gen_section(name, dirname):
 		#	sect.append("\\createlinenumber{%d}{%s}" % (line_count, digest_line(line)))
 		#	line_count += 1
 
-		if extension.lower() == 'tex':
+		if extension.lower() == 'bak':
+			continue
+		elif extension.lower() == 'tex':
 			sect.append(code)
 		elif isGenerator:
 			code = subprocess.Popen(['python', orig_name], stdout=subprocess.PIPE).communicate()[0]
