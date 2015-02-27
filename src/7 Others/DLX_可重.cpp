@@ -16,8 +16,7 @@ namespace dlx_with_overlapping{
 	int size[C];
 	bool mark[C];
 
-	void init(int r, int c)
-	{
+	void init(int r, int c) {
 	    nxt = nodes;
 	    memset(row, 0, sizeof(row));
 	    memset(size, 0, sizeof(size));
@@ -33,8 +32,7 @@ namespace dlx_with_overlapping{
 	    }
 	}
 
-	node *add(int x, int y)
-	{
+	node *add(int x, int y) {
 	    node *p = nxt++;
 	    p->x = x; p->y = y;
 	    size[y]++;
@@ -51,8 +49,7 @@ namespace dlx_with_overlapping{
 	    return p;
 	}
 
-	void cover(node *x)
-	{
+	void cover(node *x) {
 	    for (node *y = x->d; y != x; y = y->d) {
 	        y->l->r = y->r;
 	        y->r->l = y->l;
@@ -60,17 +57,14 @@ namespace dlx_with_overlapping{
 	    }
 	}
 
-	void uncover(node *x)
-	{
+	void uncover(node *x) {
 	    for (node *y = x->u; y != x; y = y->u) {
 	        y->l->r = y->r->l = y;
 	        size[x->y]++;
 	    }
-
 	}
 
-	int h()
-	{
+	int h() {
 	    int res = 0;
 	    node *x, *y, *z;
 	    memset(mark, 0, sizeof(mark));
@@ -86,9 +80,7 @@ namespace dlx_with_overlapping{
 
 	int ans;
 	int val[R];
-	void dfs(int dep, int curval) 
-	{
-
+	void dfs(int dep, int curval)  {
 		if (curval >= ans) return ;
 		node *x, *y, *z = NULL;
 		if (dep < h()) return ;
@@ -107,15 +99,12 @@ namespace dlx_with_overlapping{
 			for (y = x->l; y != x; y = y->l) uncover(y);
 			uncover(x);
 		}
-
 	}
 
-	int solve(int MAX, int *_val) 
-	{
+	int solve(int MAX, int *_val)  {
 		ans = INF;
 		memcpy(val, _val, sizeof(val));
 		dfs(MAX, 0);
 		return ans;
 	}
-
 };

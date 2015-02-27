@@ -14,12 +14,9 @@ struct NetWork {
 		nvet = 0;
 	}
 
-	int addVertex() {
-		return nvet++;
-	}
+	int addVertex() { return nvet++; }
 
-	void makeEdge(int s, int t, int c, int f) //source,dest,cost,flow
-	{
+	void makeEdge(int s, int t, int c, int f) { //source,dest,cost,flow
 		next[nedge] = head[s];
 		dest[nedge] = t;
 		cost[nedge] = c;

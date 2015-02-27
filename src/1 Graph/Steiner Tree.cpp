@@ -15,10 +15,8 @@ int steiner(int n, vector<int> ts)
 		for(int j = 0;j < n;j++)
 			dp[1 << i][j] = G[ts[i]][j];
 	
-	for(int i = 1;i < (1 << m);i++) if( ((i-1) & i) != 0 )
-	{
-		for(int j = 0;j < n;j++)
-		{
+	for(int i = 1;i < (1 << m);i++) if( ((i-1) & i) != 0 ) {
+		for(int j = 0;j < n;j++) {
 			dp[i][j] = INF; // 0x3F3F3F3F or something like.
 			for(int k = (i-1) & i;k > 0;k = (k-1) & i)
 				dp[i][j] = min(dp[i][j], dp[k][j] + dp[i^k][j]);

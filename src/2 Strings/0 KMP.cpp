@@ -1,10 +1,8 @@
 <TeX> 求出 next 并返回 str 的循环周期。 用于匹配过程一样。</TeX>
 int k_next[1111111];
-int kmp(char* str,int len)
-{
+int kmp(char* str,int len) {
 	int now = 0;
-	for(int i = 1;i < len;i++)
-	{
+	for(int i = 1;i < len;i++) {
 		while(now && str[i] != str[now]) now = k_next[now-1];
 		if(str[i] == str[now]) now++;
 		k_next[i] = now;
@@ -13,4 +11,3 @@ int kmp(char* str,int len)
 	if(len % period == 0) return period;
 	return len;
 }
-

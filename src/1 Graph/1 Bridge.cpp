@@ -2,16 +2,13 @@
 int DFN[MAXN],Low[MAXN];
 bool vis[MAXN],isBridge[MAXM];
 int idx = 0;
-int tarjan(int x,int peid=-1)
-{
+int tarjan(int x,int peid=-1) {
 	vis[x] = true;
 	DFN[x] = Low[x] = ++idx;
-	for(EDGE* e = E[x];e;e = e->Next)
-	{
+	for(EDGE* e = E[x];e;e = e->Next) {
 		int y = e->y; int eid = e->id;
 		if(eid == peid) continue;
-		if(!vis[y])
-		{
+		if(!vis[y]) {
 			tarjan(y,eid);
 			Low[x] = min(Low[x],Low[y]);
 		}

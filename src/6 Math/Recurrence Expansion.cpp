@@ -4,12 +4,10 @@
 $O(n^2 \log m)$ $k_i$稀疏的话用FFT可以达成$O(n \log n \log m)$</TeX>
 
 // c at least double c[n+1]
-int recFormula(double* k, int n, long long m, double* c)
-{
+int recFormula(double* k, int n, long long m, double* c) {
 	memset(c,0,sizeof(*c)*(n+1));
 	if(m < n) c[m] = 1;
-	else
-	{
+	else {
 		double* b = new double[n+1];
 		recFormula(k, n, m >> 1, b);
 
@@ -17,14 +15,12 @@ int recFormula(double* k, int n, long long m, double* c)
 		memset(a,0,sizeof(a[0])*(n*2));
 
 		int s = m & 1;
-		for(int i = 0;i < n;i++)
-		{
+		for(int i = 0;i < n;i++) {
 			for(int j = 0;j < n;j++) a[i + j + s] += b[i] * b[j];
 			c[n] += b[i];
 		}
 		c[n] = (c[n] + 1) * b[n];
-		for(int i = n * 2 - 1;i >= n;i--)
-		{
+		for(int i = n * 2 - 1;i >= n;i--) {
 			for(int j = 0;j < n;j++) a[i - n + j] += k[j] * a[i];
 			c[n] += a[i];
 		}

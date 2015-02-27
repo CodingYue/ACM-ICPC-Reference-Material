@@ -5,8 +5,7 @@
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 StringTokenizer tokenizer = null;
 
-public String next()
-{
+public String next() {
 	while (tokenizer == null || !tokenizer.hasMoreTokens()) {
 		try {
 			tokenizer = new StringTokenizer(reader.readLine());

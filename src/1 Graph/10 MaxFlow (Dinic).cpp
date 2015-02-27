@@ -25,8 +25,7 @@ public:
 		if(x == t) return available;
 		int used = 0;
 		for(ARC* ar = Arc[x];ar && used < available;ar = ar->Next)
-			if(ar->c > 0 && level[ar->y] == level[x] + 1)
-			{
+			if(ar->c > 0 && level[ar->y] == level[x] + 1) {
 				int tflow = dfs_augment(ar->y, min(ar->c, available-used));
 				used += tflow;
 				ar->c -= tflow; ar->R->c += tflow;

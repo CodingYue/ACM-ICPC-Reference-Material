@@ -11,7 +11,7 @@ namespace BSGS {
 			for(int z = h[vex]; z; z = next[z]) if(has[z].fi == p) return;
 			has[++tot] = MP(p,pos); next[tot] = h[vex]; h[vex] = tot;
 		}
-		int  find(int p){
+		int find(int p){
 			if (p == 0) return -1;
 			for(int z = h[p % HMD]; z; z = next[z]) if(has[z].fi == p) return has[z].se;
 			return -1;
@@ -24,8 +24,7 @@ namespace BSGS {
 			now = (LL) now * y % p;
 		}
 	}
-	int find(int y, int z, int p)
-	{
+	int find(int y, int z, int p) {
 		int D = fpow(y, m, p), now = 1;
 		D = fpow(D, p - 2, p);
 		for (int i = 0; i <= p / m + 1; ++i) {

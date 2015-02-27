@@ -15,8 +15,7 @@ template<int MAXN, int SIGMA> class PalindromeTree {
 public:
 	struct TNODE {
 		int len;
-		TNODE* suffLink;
-		TNODE* child[SIGMA];
+		TNODE* suffLink, *child[SIGMA];
 		
 		/* Extra fields */
 		// int cnt;

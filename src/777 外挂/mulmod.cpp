@@ -3,16 +3,9 @@
 inline int mulmod(int x,int y,int mod)
 {
 	int ans = 0;
-	__asm__
-	(
-		"movl %1,%%eax\n"
-		"imull %2\n"
-		"idivl %3\n"
-		
-		:"=d"(ans)
-		:"m"(x),"m"(y),"m"(mod)
-		:"%eax"
+	__asm__ (
+		"movl %1,%%eax\n imull %2\n idivl %3\n"
+		:"=d"(ans):"m"(x),"m"(y),"m"(mod):"%eax"
 	);
 	return ans;
 }
-

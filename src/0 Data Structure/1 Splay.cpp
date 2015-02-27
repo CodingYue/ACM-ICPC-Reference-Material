@@ -1,44 +1,31 @@
 <TeX>如果需要建初始树，记得 x->update()</TeX>
-class SNode
-{
+class SNode {
 public:
-	int val;
-	int size;
-	bool rev;
+	int val, size; bool rev;
+	SNode* child[2], *fa;
 
-	SNode* child[2];
-	SNode* fa;
-
-	int update()
-	{
+	void update() {
 		pushdown();
 		size = 1;
 		for(int i = 0;i < 2;i++)
-			if(child[i])
-			{
+			if(child[i]) {
 				child[i]->pushdown();
 				size += child[i]->size;
 			}
-		return 0;
 	}
-	int pushdown()
-	{
-		if(rev)
-		{
+	int pushdown() {
+		if(rev) {
 			swap(child[0],child[1]);
-			for(int i = 0;i < 2;i++)
-				if(child[i]) child[i]->rev ^= 1;
+			for(int i = 0;i < 2;i++) if(child[i]) child[i]->rev ^= 1;
 			rev = false;
 		}
 		return 0;
 	}
 };
 
-int Rotate(SNode* x,int dir)
-{
+int Rotate(SNode* x,int dir) {
 	SNode* p = x->fa;
-	p->pushdown();
-	x->pushdown();
+	p->pushdown(); x->pushdown();
 
 	p->child[dir] = x->child[dir^1];
 	if(x->child[dir^1]) x->child[dir^1]->fa = p;
@@ -53,16 +40,13 @@ int Rotate(SNode* x,int dir)
 	return 0;
 }
 
-SNode* Splay(SNode* x,SNode* Tar)
-{
-	while(x->fa != Tar)
-	{
+SNode* Splay(SNode* x,SNode* Tar) {
+	while(x->fa != Tar) {
 		int dir = 0;
 		if(x->fa->child[0] == x) dir = 0;
 		else dir = 1;
 		if(x->fa->fa == Tar) Rotate(x,dir);
-		else if(x->fa->fa->child[dir] == x->fa)
-		{
+		else if(x->fa->fa->child[dir] == x->fa) {
 			Rotate(x->fa,dir);
 			Rotate(x,dir);
 		} else {
@@ -73,17 +57,14 @@ SNode* Splay(SNode* x,SNode* Tar)
 	return x;
 }
 
-SNode* Select(SNode* x,int k)
-{
-	while(1)
-	{
+SNode* Select(SNode* x,int k) {
+	while(1) {
 		x->pushdown();
 		int xrank = 1;
 		if(x->child[0]) xrank += x->child[0]->size;
 		if(xrank == k) break;
 		else if(k < xrank) x = x->child[0];
-		else
-		{
+		else {
 			x = x->child[1];
 			k -= xrank;
 		}

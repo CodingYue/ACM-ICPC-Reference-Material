@@ -7,13 +7,11 @@ int mintree = 0;
 int cog = -1;
 int allSize = 0;
 int TreeSize[222222];
-int findcog(int x,int fa)
-{
+int findcog(int x,int fa) {
 	TreeSize[x] = 1;
 	
 	int cur = 0;
-	for(EDGE* e = E[x];e;e = e->Next)
-	{
+	for(EDGE* e = E[x];e;e = e->Next) {
 		int y = e->y;
 		if(y == fa || disabled[y]) continue;
 		findcog(y,x);
@@ -21,23 +19,17 @@ int findcog(int x,int fa)
 		cur = max(cur,TreeSize[y]);
 	}
 	cur = max(cur,allSize-TreeSize[x]);
-	if(cur < mintree)
-	{
-		mintree = cur;
-		cog = x;
-	}
+	if(cur < mintree) { mintree = cur; cog = x; }
 	return 0;
 }
 
-int FuckTree(int root,int size)
-{
+int FuckTree(int root,int size) {
 	mintree = 0x7FFFFFFF; cog = -1;
 	allSize = size; findcog(root,-1);
 	root = cog;
 	
 	pcnt = 0; // deal subtree ops here
-	for(EDGE* e = E[root];e;e = e->Next)
-	{
+	for(EDGE* e = E[root];e;e = e->Next) {
 		int y = e->y;
 		int w = e->w;
 		if(disabled[y]) continue;
@@ -48,8 +40,7 @@ int FuckTree(int root,int size)
 	}
 
 	disabled[root] = true;
-	for(EDGE* e = E[root];e;e = e->Next)
-	{
+	for(EDGE* e = E[root];e;e = e->Next) {
 		int y = e->y;
 		if(disabled[y]) continue;
 		

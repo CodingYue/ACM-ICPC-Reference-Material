@@ -5,33 +5,17 @@
 
 POINT P[111111];
 int yOrder[111111];
-inline bool cmp_x(const POINT& a,const POINT& b)
-{
-	return a.x==b.x?a.y<b.y:a.x<b.x;
-}
-
-inline bool cmp_y(const int a,const int b)
-{
-	POINT& A = P[a];
-	POINT& B = P[b];
-	return A.y==B.y?A.x<B.x:A.y<B.y;
-}
+inline bool cmp_x(const POINT& a,const POINT& b) { return a.x==b.x?a.y<b.y:a.x<b.x; }
+inline bool cmp_y(const int a,const int b) { return P[a].y==P[b].y?P[a].x<P[b].x:P[a].y<P[b].y; }
 
 int thisY[111111];
 // [l,r)
-double closest_pair(int l,int r)
-{
+double closest_pair(int l,int r) {
 	double ans = 1e100;
-	if(r-l <= 6)
-	{
-		// just brute force_-
+	if(r-l <= 6) {
 		for(int i = l;i < r;i++)
-		{
 			for(int j = i+1;j < r;j++)
-			{
 				ans = min(ans,(P[i]-P[j]).hypot());
-			}
-		}
 		sort(yOrder+l,yOrder+r,cmp_y);
 		return ans;
 	}
@@ -42,18 +26,13 @@ double closest_pair(int l,int r)
 	
 	int top = 0;
 	double ll = P[mid].x;
-	for(int i = l;i < r;i++)
-	{
+	for(int i = l;i < r;i++) {
 		double xx = P[yOrder[i]].x;
 		if(ll-ans <= xx && xx <= ll+ans) thisY[top++] = yOrder[i];
 	}
 
 	for(int i = 0;i < top;i++)
-	{
 		for(int j = i+1;j < i+4 && j < top;j++)
-		{
 			ans = min(ans,(P[thisY[j]]-P[thisY[i]]).hypot());
-		}
-	}
 	return ans;
 }
