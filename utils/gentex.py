@@ -38,6 +38,8 @@ def gen_section(name, dirname):
 		
 	for (index, title, extension, code, orig_name) in sorted(files):
 		#sect.append("\\subsection{%s}" % title)
+		if extension.lower() == 'bak':
+			continue
 		isGenerator = False
 		title = title.replace('_','\\_')
 		if title.endswith('.generator'):
@@ -49,9 +51,7 @@ def gen_section(name, dirname):
 		#	sect.append("\\createlinenumber{%d}{%s}" % (line_count, digest_line(line)))
 		#	line_count += 1
 
-		if extension.lower() == 'bak':
-			continue
-		elif extension.lower() == 'tex':
+		if extension.lower() == 'tex':
 			sect.append(code)
 		elif isGenerator:
 			code = subprocess.Popen(['python', orig_name], stdout=subprocess.PIPE).communicate()[0]
