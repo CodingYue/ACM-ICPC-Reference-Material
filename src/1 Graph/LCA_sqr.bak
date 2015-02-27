@@ -1,0 +1,21 @@
+int Queue[111111];
+int build_lca(int root) {
+	int front(0), end(0);
+	Queue[end++] = root;
+	fa[root][0] = 0; // -1 
+	while(front != end) {
+		int x = Queue[front++];
+		for(EDGE* e = E[x];e;e = e->Next) {
+			int y = e->y;
+			fa[y][0] = x;
+			depth[y] = depth[x]+1;
+			Queue[end++] = y;	
+		}
+	}
+	for(int i = 1;i < 18;i++)
+		for(int j = 0;j < end;j++) {
+			int x = Queue[j];
+			fa[x][i] = fa[fa[x][i-1]][i-1];
+		}
+	return 0;
+}

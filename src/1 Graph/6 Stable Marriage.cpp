@@ -7,8 +7,7 @@ preferF[i][j] 为妹子i心中汉子j是第几位
 不停的让汉子在自己的偏好列表里按顺序去找妹子，妹子取最优即可 $O(n^2)$
 </TeX>
 int stableMarriage(int n) {
-	memset(pairM,-1,sizeof(pairM));
-	memset(pairF,-1,sizeof(pairF));
+	memset(pairM,-1,sizeof(pairM)); memset(pairF,-1,sizeof(pairF));
 	int pos[MAXN] = {0};
 	for(int i = 0;i < n;i++) {
 		while(pairM[i] == -1) { // can be implemented using queue
@@ -18,10 +17,5 @@ int stableMarriage(int n) {
 				pairM[i] = wife; pairF[wife] = i;
 				if(ex != -1) {
 					pairM[ex] = -1;
-					i = ex; // take GREAT care
-				}
-			}
-		}
-	}
-	return 0;
-}
+					i = ex                                   ;}}}}
+	return 0;}
