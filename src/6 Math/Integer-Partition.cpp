@@ -17,4 +17,3 @@ void parition(int n) {
         }
     }
 }
-

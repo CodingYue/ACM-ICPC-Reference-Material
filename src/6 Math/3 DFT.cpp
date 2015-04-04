@@ -29,5 +29,4 @@ void fft(int sign, cplx* data, int n) {
 		int j = intrev(i) >> d;
 		if(j < i) swap(data[i],data[j]);
 	}
-	return;
 }

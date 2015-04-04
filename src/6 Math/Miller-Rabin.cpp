@@ -1,6 +1,6 @@
 // Always call "IsPrime" unless you know what are you doing
 
-int MillerRabin(ull a,ull n) {
+int millerRabin(ull a,ull n) {
 	if(n == 2) return 1;
 	if(n == 1 || (n & 1) == 0) return 0;
 	ull d = n-1;
@@ -13,8 +13,8 @@ int MillerRabin(ull a,ull n) {
 	return (t == n-1) || ((d & 1) == 1);
 }
 
-int LPrimes[] = {2,3,5,7,11,13,17,19,23};
-int IsPrime(ull n) {
+const int LPrimes[] = {2,3,5,7,11,13,17,19,23};
+int isPrime(ull n) {
 	int result = 1;
 	for(int i = 0;i < sizeof(LPrimes)/sizeof(int);i++) {
 		if(LPrimes[i] >= n) break;

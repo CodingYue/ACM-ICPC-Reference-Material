@@ -10,9 +10,7 @@ void dfs(int P, int X) {
     while (Q) {
         int i = __builtin_ctz(Q);
         dfs(P & G[i], X & G[i]);
-        Q &= ~(1<<i);
-        P &= ~(1<<i);
-        X |= (1<<i);
+        Q &= ~(1<<i); P &= ~(1<<i); X |= (1<<i);
     }
 }
  

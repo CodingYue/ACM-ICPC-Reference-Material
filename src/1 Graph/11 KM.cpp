@@ -2,7 +2,7 @@ int n,nx,ny,m;
 int link[MaxN],lx[MaxN],ly[MaxN],slack[MaxN]; 
 int visx[MaxN],visy[MaxN],w[MaxN][MaxN];
 
-void DFS(int x) {
+bool DFS(int x) {
 	visx[x] = 1;
 	for (int y = 1;y <= ny;y++) {
 		if (visy[y]) continue;
@@ -11,11 +11,12 @@ void DFS(int x) {
 			visy[y] = 1;
 			if (link[y] == -1 || DFS(link[y])) {
 				link[y] = x;
-				return 1;
+				return true;
 			}
 		}
 		else if (slack[y] > t) slack[y] = t;
 	}
+	return false;
 }
 void KM() {
 	int i,j;

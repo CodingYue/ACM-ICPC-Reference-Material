@@ -1,7 +1,5 @@
-<TeX> 大部分应用基于一个性质：fail指向与当前串的后缀相等的前缀最长的节点。
- 另外可以模仿匹配过程在Trie上DP进行统计。
- Build a Trie then run the code below. </TeX>
-TNODE* Queue[66666];
+<TeX> fail指向与当前串的后缀相等的前缀最长的节点 </TeX>
+TNODE* Queue[MAXNODY];
 int build_ac_automaton() {
 	int front = 0; int end = 0;
 	Queue[end++] = Root;

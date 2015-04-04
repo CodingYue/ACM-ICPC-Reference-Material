@@ -14,12 +14,8 @@ $O(n \log \sum)$，可以假装自己是线性的，像SAM一样。</TeX>
 template<int MAXN, int SIGMA> class PalindromeTree {
 public:
 	struct TNODE {
-		int len;
+		int len; /* Extra fields */ // int cnt;
 		TNODE* suffLink, *child[SIGMA];
-		
-		/* Extra fields */
-		// int cnt;
-		/* ------------ */
 	};
 
 	char text[MAXN]; int textLen;

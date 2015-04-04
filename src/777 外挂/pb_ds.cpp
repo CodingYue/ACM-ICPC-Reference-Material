@@ -8,10 +8,10 @@
 
 using namespace __gnu_pbds;
 
-typedef tree<int, null_mapped_type, less<int>,rb_tree_tag,tree_order_statistics_node_update> superset;
-typedef tree<int, int, less<int>,rb_tree_tag,tree_order_statistics_node_update> supermap;
 // .order_of_key() 返回某个值的排名，是lower_bound的rank版。
 // .find_by_order() 返回一个iterator表示某个特定排名的值。
+template<typename T> using rset=tree<T, null_mapped_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template<typename T, typename U> rmap=tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update> supermap;
 
 // 合并，需要保证st中所有元素的key比another_st中的小。
 st.join(another_st);

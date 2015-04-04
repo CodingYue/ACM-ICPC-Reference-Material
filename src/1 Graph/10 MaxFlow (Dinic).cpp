@@ -1,4 +1,7 @@
-<TeX>ARC定义参见Labeling做法的最大流。</TeX>
+<TeX>对于一条边，如果他的两个点分属不同的连通分量且满流则这条边可属于网络的最小割。
+如果他的两个点分属不同的联通分量且满流且两个点分别和source，sink属于同一个连通分量，则这条边必属于最小割。
+
+	@Yuege: 请，一定，要，用，dfs，找割集。</TeX>
 class DinicMaxFlow {
 public:
 	void reset() { memset(Arc,0,sizeof(Arc)); APTop = APool; }
@@ -6,7 +9,7 @@ public:
 
 	int level[MAXN]; int s,t,n;
 	bool bfs_level() {
-		memset(level,-1,sizeof(level[0]) * (n+3)); // avoid some off by one pity
+		memset(level,-1,sizeof(level[0]) * (n+3));
 		int front(0), end(0);
 		static int queue[MAXN];
 		queue[end++] = s; level[s] = 0;

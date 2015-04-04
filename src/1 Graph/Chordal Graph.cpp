@@ -16,36 +16,24 @@
 
 判断一个序列是否为完美消除序列： 设{vi+1,…,vn}中所有与vi相邻的点依次为vj1,…, vjk。只需判断vj1是否与vj2,…, vjk相邻即可。
 弦图的最大点独立集——完美消除序列从前往后能选就选。最小团覆盖数=最大点独立集数。</TeX>
-int Label[10010], Order[10010], Seq[10010], Color[10010], Useable[10010];
+int label[10010], order[10010], seq[10010], color[10010], usable[10010];
 
-int main(void) {
-	int N, M;
-	scanf("%d %d",&N,&M);
-	for(int i = 0;i < M;i++) {
-		int x,y;
-		scanf("%d %d",&x,&y);
-		insert_edge(x,y);
-		insert_edge(y,x);
-	}
-
-	Label[0] = -5555;
+int chordal() {
+	label[0] = -5555;
 	for(int i = N;i > 0;i--) {
 		int t = 0;
-		for(int j = 1;j <= N;j++) if(!Order[j] && Label[j] > Label[t]) t = j;
-		Order[t] = i;
-		Seq[i] = t;
-		for(EDGE* e = E[t];e != NULL;e = e->Next) Label[e->y]++;
+		for(int j = 1;j <= N;j++) if(!order[j] && label[j] > label[t]) t = j;
+		order[t] = i; seq[i] = t;
+		for(auto y: edges[t]) label[y]++;
 	}
 
 	int ans = 0;
 	for(int i = N;i > 0;i--) {
-		for(EDGE* e = E[Seq[i]];e != NULL;e = e->Next)
-			Useable[Color[e->y]] = i;
+		for(auto y: edges[seq[i]]) usable[color[e->y]] = i;
 		int c = 1;
-		while(Useable[c] == i) c++;
-		Color[Seq[i]] = c;
-		if(c > ans) ans = c;
+		while(usable[c] == i) c++;
+		color[seq[i]] = c;
+		ans = max(ans, c)
 	}
-	printf("%d\n",ans);
-	return 0;
+	return ans;
 }

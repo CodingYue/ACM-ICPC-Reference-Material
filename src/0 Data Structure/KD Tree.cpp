@@ -28,8 +28,7 @@ KDNODE* KDTree_Build(int l,int r,int depth=0) {
 	
 	t->Child[0] = KDTree_Build(l,mid,depth+1);
 	t->Child[1] = KDTree_Build(mid+1,r,depth+1);
-	for(int i = 0;i < 2;i++)
-		if(t->Child[i]) t->Child[i]->fa = t;
+	for(int i = 0;i < 2;i++) if(t->Child[i]) t->Child[i]->fa = t;
 	return t;
 }
 

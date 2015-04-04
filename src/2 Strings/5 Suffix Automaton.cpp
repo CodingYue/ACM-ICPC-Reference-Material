@@ -1,6 +1,4 @@
-// Suffix Automaton //
-// 自行定义 SAMNODE 结构体和相关 pool ，like a trie: child[],fa,len
-SAMNODE* Root,*Last; // Must be inited!
+SAMNODE* Root,*Last; // take care, init them
 int append_char(int ch) {
 	SAMNODE* x = Last, t = SPTop++;
 	t->len = x->len+1;

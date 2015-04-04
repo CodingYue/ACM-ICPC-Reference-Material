@@ -3,9 +3,7 @@
 bool disabled[222222];
 
 // init mintree with MAXINT plz...
-int mintree = 0;
-int cog = -1;
-int allSize = 0;
+int mintree = 0; int cog = -1; int allSize = 0;
 int TreeSize[222222];
 int findcog(int x,int fa) {
 	TreeSize[x] = 1;
@@ -30,12 +28,10 @@ int FuckTree(int root,int size) {
 	
 	pcnt = 0; // deal subtree ops here
 	for(EDGE* e = E[root];e;e = e->Next) {
-		int y = e->y;
-		int w = e->w;
+		int y = e->y; int w = e->w;
 		if(disabled[y]) continue;
 		
-		length[y] = w;
-		depth[y] = 1;
+		length[y] = w; depth[y] = 1;
 		dfs(y,y,root); 
 	}
 

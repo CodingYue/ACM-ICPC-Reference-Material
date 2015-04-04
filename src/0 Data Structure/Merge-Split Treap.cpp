@@ -17,7 +17,8 @@ TNODE* TPTop = TPool;
 inline int real_rand() { return ((rand()&32767)<<15)^rand(); }
 TNODE* newNode(int val,TNODE* left=NULL,TNODE* right=NULL) {
 	TNODE* result = TPTop++;
-	result->val = val; result->rd = real_rand(); result->left = left; result->right = right; result->fa = NULL;
+	result->val = val; result->rd = real_rand(); 
+	result->left = left; result->right = right; result->fa = NULL;
 	result->update();
 	return result;
 }
@@ -55,6 +56,7 @@ ptt Split(TNODE* x,int pos) {
 
 inline int Rank(TNODE* x) {
 	int ans = x->left ? x->left->size : 0;
-	for(;x->fa;x = x->fa) if(x == x->fa->right) ans += (x->fa->left ? x->fa->left->size : 0) + 1;
+	for(;x->fa;x = x->fa)
+		if(x == x->fa->right) ans += (x->fa->left ? x->fa->left->size : 0) + 1;
 	return ans;
 }

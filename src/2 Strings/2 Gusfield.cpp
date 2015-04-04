@@ -1,8 +1,5 @@
-<TeX>Also known as "Extended KMP". 
-  Usage:
-    $z_i$ = lcp(text+i,pattern)
-    Run zFunction(z\_pat,pat,pat,patLen,patLen) for self matching. </TeX>
-int z_pat[2222222] = {0};
+<TeX> $z_i$ = lcp(text+i,pattern) </TeX>
+int z_pat[MAXLEN] = {0};
 int zFunction(int* z,char* text,char* pat,int textLen=-1,int patLen=-1) {
 	if(textLen == -1) textLen = strlen(text);
 	if(patLen == -1) patLen = strlen(pat);
