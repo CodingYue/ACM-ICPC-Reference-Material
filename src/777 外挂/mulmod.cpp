@@ -1,11 +1,11 @@
 /* return x*y%mod. no overflow if x,y < mod
- * remove 'i' in "idiv"/"imul" if change to unsigned*/
-inline int mulmod(int x,int y,int mod)
+ * remove 'i' in "idiv"/"imul" -> unsigned */
+inline long mulmod(long x,long y,long mod)
 {
-	int ans = 0;
+	long ans = 0;
 	__asm__ (
-		"movl %1,%%eax\n imull %2\n idivl %3\n"
-		:"=d"(ans):"m"(x),"m"(y),"m"(mod):"%eax"
+		"movq %1,%%rax\n imulq %2\n idivq %3\n"
+		:"=d"(ans):"m"(x),"m"(y),"m"(mod):"%rax"
 	);
 	return ans;
 }
