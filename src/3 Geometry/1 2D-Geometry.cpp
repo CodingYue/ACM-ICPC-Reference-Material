@@ -56,7 +56,7 @@ bool is_point_onseg(Point p1,Point p2,Point P)
 }
 // 点q 到直线 {p1, p2} 垂足
 Point proj(Point p1, Point p2, Point q) {
-	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).len()));
+	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).len2()));
 }
 // 点q 到线段 {p1, p2} 的距离
 double dis_p_seg(Point q, Point p1, Point p2) {
