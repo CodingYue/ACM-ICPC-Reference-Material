@@ -1,4 +1,4 @@
-<TeX>n! % mod where mod = p^k。 $O(p \log n)$</TeX>
+<TeX>n! \% mod where mod = p^k。 $O(p \log n)$</TeX>
 
 LL get(int n, int mod, int p) {
 	LL ans = 1;
