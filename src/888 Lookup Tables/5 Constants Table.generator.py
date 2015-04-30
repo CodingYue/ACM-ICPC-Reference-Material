@@ -23,11 +23,11 @@ def binom(n,k):
 C_TABLE_1 = {
 	"n_list": crange(2,20) + crange(25,30,5) + [40, 50, 70] ,
 	"sequences":[
-	{
-		"name": r"$ \log _ {10} n $",
-		"list": lambda n: '%.2f' % math.log10(n),
-		"limit": lambda n: n <= 10
-	},
+#	{
+#		"name": r"$ \log _ {10} n $",
+#		"list": lambda n: '%.2f' % math.log10(n),
+#		"limit": lambda n: n <= 10
+#	},
 	{
 		"name": r"$ n! $",
 		"list": math.factorial,

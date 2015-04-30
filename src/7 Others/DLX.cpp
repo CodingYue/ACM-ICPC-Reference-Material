@@ -1,5 +1,3 @@
-const int MAXINT = 0x7FFFFFFF;
-
 struct DLXNODE {
 	union { int S; DLXNODE* C; };
 	int Row; DLXNODE *U,*D,*L,*R;
@@ -20,8 +18,7 @@ void remove(DLXNODE* c) {
 		}
 }
 
-void resume(DLXNODE* c)
-{
+void resume(DLXNODE* c) {
 	for(DLXNODE* i = c->D;i != c;i = i->D)
 		for(DLXNODE* j = i->L;j != i;j = j->L) {
 			j->U->D = j->D->U = j;

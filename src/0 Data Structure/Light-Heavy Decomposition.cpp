@@ -48,16 +48,16 @@ for(int i = qend-1;i >= 0;i--) {
 
 // 参考用爬树过程
 int ColorNode(int x,int y,int nc) {
-    while(1) {
-        if(Depth[BlockRoot[x]] > Depth[BlockRoot[y]]) swap(x,y);
-         
-        if(BlockRoot[x] == BlockRoot[y]) {
-            if(Depth[x] > Depth[y]) swap(x,y);
-            Seg_Modify(NodeID[x],NodeID[y],nc,1,idx);
-            break;
-        }
-        Seg_Modify(NodeID[BlockRoot[y]],NodeID[y],nc,1,idx);
-        y = fa[BlockRoot[y]];
-    }
-    return 0;
+	while(1) {
+		if(Depth[BlockRoot[x]] > Depth[BlockRoot[y]]) swap(x,y);
+		 
+		if(BlockRoot[x] == BlockRoot[y]) {
+			if(Depth[x] > Depth[y]) swap(x,y);
+			Seg_Modify(NodeID[x],NodeID[y],nc,1,idx);
+			break;
+		}
+		Seg_Modify(NodeID[BlockRoot[y]],NodeID[y],nc,1,idx);
+		y = fa[BlockRoot[y]];
+	}
+	return 0;
 }
