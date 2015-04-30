@@ -1,10 +1,23 @@
-<TeX>对于素数p，求$n!$在可以表示成$n! = ap^k$时的$a$的值。 $O(p \log n)$</TeX>
+<TeX>n! \% mod where mod = p^k。 $O(p \log n)$</TeX>
 
-int modFact(int n,int p) {
-	int ans = 1;
-	while(n > 0) {
-		for(int i = 1, m = n % p;i <= m;i++) ans = (ans * i) % p;
-		if((n /= p) % 2 > 0) res = p - res;
+LL get(int n, int mod, int p) {
+	LL ans = 1;
+	for (int i = 1; i <= n; ++i) if (i % p != 0) {
+		ans = ans * i % mod;
 	}
-	return res;
+	return ans;
+}
+pii solve(LL n, int mod, int p) {
+	LL init = get(mod, mod, p);
+	pii ans = pii(1, 0);
+	for (LL now = p; now <= n; now *= p) {
+		ans.second += n / now;
+		if (now > n / p) break;
+	}
+	while (n > 0) {
+		ans.first = (LL) ans.first * fpow(init, n / mod, mod) % mod;
+		ans.first = ans.first * get(n % mod, mod, p) % mod;
+		n /= p;
+	}
+	return ans;
 }
