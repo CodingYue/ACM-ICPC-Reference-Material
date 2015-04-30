@@ -8,15 +8,9 @@ pairing_heap::join $ O(1) $, thin_heap::join $O(n)$，join with tree_order_stati
 
 using namespace __gnu_pbds;
 
-<<<<<<< HEAD
 // .order_of_key() = find rank for a given value, .find_by_order() = find value for a given rank
 template<typename T> using rset=tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-=======
-// .order_of_key() 返回某个值的排名，是lower_bound的rank版。
-// .find_by_order() 返回一个iterator表示某个特定排名的值。
-template<typename T> using rset=tree<T, null_mapped_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
->>>>>>> 191f985... Make everything nicer, specifically for world finals.
-template<typename T, typename U> rmap=tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update> supermap;
+template<typename T, typename U> rmap=tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 // 合并，需要保证st中所有元素的key比another_st中的小。拆分是严格大于key的。
 st.join(another_st); st.split(key, output_st);
