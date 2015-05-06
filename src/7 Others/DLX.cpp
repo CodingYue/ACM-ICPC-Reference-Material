@@ -1,112 +1,110 @@
-struct DLXNODE {
-	union { int S; DLXNODE* C; };
-	int Row; DLXNODE *U,*D,*L,*R;
+namespace dlx_with_overlapping{
+	//dlx可重覆盖模板，行和列的下标从0开始，一开始调用init(R,C)初始化，R为行数，C为列数
+	//在x行y列添加节点直接调用add(x,y)
+	//如果行带权的话存val数组，下表同样从0开始，慢的话看情况加最优化剪枝
+	const int N = 55;
+	const int R = N;
+	const int C = 55;
+	const int MaxNode = R * C;
+
+	struct node {
+	    int x, y;
+	    node *l, *r, *u, *d;
+	};
+
+	node nodes[MaxNode], *nxt, *root, *row[R], *col[C];
+	int size[C];
+	bool mark[C];
+
+	void init(int r, int c) {
+	    nxt = nodes;
+	    memset(row, 0, sizeof(row));
+	    memset(size, 0, sizeof(size));
+	    root = nxt++;
+	    root->l = root->r = root;
+	    for (int y = 0; y < c; ++y) {
+	        node *p = nxt++;
+	        p->x = -1; p->y = y;
+	        p->r = root;
+	        p->l = root->l;
+	        p->r->l = p->l->r = p;
+	        col[y] = p->u = p->d = p;
+	    }
+	}
+
+	node *add(int x, int y) {
+	    node *p = nxt++;
+	    p->x = x; p->y = y;
+	    size[y]++;
+	    if (!row[x]) {
+	        row[x] = p->l = p->r = p;
+	    } else {
+	        p->r = row[x];
+	        p->l = row[x]->l;
+	        p->r->l = p->l->r = p;
+	    }
+	    p->d = col[y];
+	    p->u = col[y]->u;
+	    p->u->d = p->d->u = p;
+	    return p;
+	}
+
+	void cover(node *x) {
+	    for (node *y = x->d; y != x; y = y->d) {
+	        y->l->r = y->r;
+	        y->r->l = y->l;
+	        size[x->y]--;
+	    }
+	}
+
+	void uncover(node *x) {
+	    for (node *y = x->u; y != x; y = y->u) {
+	        y->l->r = y->r->l = y;
+	        size[x->y]++;
+	    }
+	}
+
+	int h() {
+	    int res = 0;
+	    node *x, *y, *z;
+	    memset(mark, 0, sizeof(mark));
+	    for (x = root->l; x != root; x = x->l) if (!mark[x->y]) {
+	        mark[x->y] = 1;
+	        res++;
+	        for (y = x->u; y != x; y = y->u)
+	            for (z = y->r; z != y; z = z->r)
+	                mark[z->y] = 1;
+	    }
+	    return res;
+	} //贪心确定上界
+
+	int ans;
+	int val[R];
+	void dfs(int dep, int curval)  {
+		if (curval >= ans) return ;
+		node *x, *y, *z = NULL;
+		if (dep < h()) return ;
+		for (x = root->r; x != root; x = x->r) {
+			if (!z || size[x->y] < size[z->y]) z = x;
+		}
+		if (!z) {
+			ans = min(ans, curval);
+			return ;
+		}
+		if (!dep) return ;
+		for (x = z->u; x != z; x = x->u) {
+			cover(x);
+			for (y = x->r; y != x; y = y->r) cover(y);
+			dfs(dep - 1, curval + val[x->x]);
+			for (y = x->l; y != x; y = y->l) uncover(y);
+			uncover(x);
+		}
+	}
+
+	int solve(int MAX, int *_val)  {
+		ans = INF;
+		memcpy(val, _val, sizeof(val));
+		dfs(MAX, 0);
+		return ans;
+	}
 };
-
-DLXNODE H; DLXNODE NodePool[10000];
-int PoolTop = 0;
-
-DLXNODE* node_alloc() { memset(&NodePool[PoolTop],0,sizeof(DLXNODE)); return &NodePool[PoolTop++]; }
-int ans[100]; // 9x9
-void remove(DLXNODE* c) {
-	c->L->R = c->R; c->R->L = c->L;
-
-	for(DLXNODE* i = c->D;i != c;i = i->D)
-		for(DLXNODE* j = i->R;j != i;j = j->R) {
-			j->U->D = j->D; j->D->U = j->U;
-			j->C->S--;
-		}
-}
-
-void resume(DLXNODE* c) {
-	for(DLXNODE* i = c->D;i != c;i = i->D)
-		for(DLXNODE* j = i->L;j != i;j = j->L) {
-			j->U->D = j->D->U = j;
-			j->C->S++;
-		}
-
-	c->L->R = c->R->L = c;
-}
-
-bool dfs(int k) {
-	if(H.R == &H) {
-		// found! add custom handler here.
-		return true;
-	}
-
-	DLXNODE* tc = NULL;
-	int ts = MAXINT;
-	for(DLXNODE* i = H.R;i != &H;i = i->R) if(i->S < ts) { ts = i->S; tc = i; }
-	if(ts == MAXINT) return true; // useless
-	remove(tc);
-	for(DLXNODE* i = tc->U;i != tc;i = i->U) {
-		ans[k] = i->Row; // store state here
-		for(DLXNODE* j = i->R;j != i;j = j->R) remove(j->C);
-		if(dfs(k+1)) return true;
-		for(DLXNODE* j = i->L;j != i;j = j->L) resume(j->C);
-	}
-	resume(tc);
-	return false;
-}
-
-DLXNODE* insert_to_col(DLXNODE* c,int RowNo,DLXNODE* rl) {
-	DLXNODE* node = node_alloc();
-	// c->U is last node
-	node->U = c->U; node->D = c;
-	if(!rl) node->L = node->R = node;
-	else {
-		node->L = rl; node->R = rl->R;
-		rl->R->L = node; rl->R = node;
-	}
-	node->C = c; node->Row = RowNo;
-	c->S++; c->U->D = node; c->U = node;
-	return node;
-}
-
-// 对应 9x9 数独的建图
-int main(void) {
-	char Scene[100];
-	while(scanf("%s",Scene) != EOF && strcmp(Scene,"end")) {
-		PoolTop = 0;
-		memset(ans,0,sizeof(ans));
-
-		H.L = H.R = H.U = H.D = &H;
-		DLXNODE* cFind[324] = {0};
-		DLXNODE* last = &H;
-		for(int i = 0;i < 324;i++) {
-			DLXNODE* tn = node_alloc();
-			cFind[i] = tn;
-			tn->S = 0;
-			tn->D = tn->U = tn;
-			tn->L = last; tn->R = last->R;
-			last->R->L = tn; last->R = tn;
-			last = tn;
-		}
-		for(int i = 0;i < 9;i++) {
-			for(int j = 0;j < 9;j++) {
-				int s = 1; int e = 9;
-				if(Scene[i*9+j] != '.') s = e = Scene[i*9+j]-'0';
-				for(int k = s;k <= e;k++) {
-					int b = (i/3)*3+j/3;
-					int RowNo = i*9*9+j*9+k-1;
-
-					DLXNODE* ln = NULL;
-					ln = insert_to_col(cFind[i*9+j],RowNo,ln);
-					ln = insert_to_col(cFind[81+i*9+k-1],RowNo,ln);
-					ln = insert_to_col(cFind[162+j*9+k-1],RowNo,ln);
-					ln = insert_to_col(cFind[243+b*9+k-1],RowNo,ln);
-				}
-			}
-		}
-		dfs(0);
-		for(int i = 0;i < 81;i++) {
-			int RNo = ans[i];
-			int k = RNo % 9 + 1;
-			int j = RNo / 9 % 9;
-			int r = RNo / 81;
-			Scene[r*9+j] = '0' + k;
-		}
-		printf("%s\n",Scene);
-	}
-	return 0;
-}
