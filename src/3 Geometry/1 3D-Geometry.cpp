@@ -8,7 +8,7 @@ struct Point {
 	Point operator * (const Point &b) { return Point(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x); }
 	Point operator * (const double &b) { return Point(x * b, y * b, z * b); }
 	double operator % (const Point &b) { return x * b.x + y * b.y + z * b.z; }
-	double len2() { return x * x + y * y + z * z; }
+	double lensqr() { return x * x + y * y + z * z; }
 	double len() { return sqrt(x * x + y * y + z * z); }
 
 };
@@ -18,10 +18,10 @@ Point getLL(Point p1, Point p2, Point q1, Point q2) {
 	Point p = q1 - p1;
 	Point u = p2 - p1;
 	Point v = q2 - q1;
-	//len2 means len^2
-	double d = u.len2() * v.len2() - (u % v) * (u % v);
+	//lensqr means len^2
+	double d = u.lensqr() * v.lensqr() - (u % v) * (u % v);
 	//if (abs(d) < eps) return NULL;
-	double s = ((p % u) * v.len2() - (p % v) * (u % v)) / d;
+	double s = ((p % u) * v.lensqr() - (p % v) * (u % v)) / d;
 	return p1 + u * s;
 }
 // 面与线的交点, d = 0 时线在面上或与面平行
@@ -51,7 +51,7 @@ double get(Point c, double r, Point p1, Point p2) {
 	Point v = (p2 - p1); v = v * (1 / v.len());
 	double x = (c - p1) % v;
 	v = p1 + v * x;
-	double d = (v - c).len2();
+	double d = (v - c).lensqr();
 	if (dcmp(d - r * r) >= 0) return -1.;
 	d = (p1 - v).len() - sqrt(r * r - d);
 	return d;

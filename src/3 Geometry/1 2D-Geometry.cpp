@@ -11,7 +11,7 @@ struct Point {
 	double ang() { double res = atan2(y, x); if (dcmp(res) < 0) res += pi * 2; return res; }
 	double operator * (const Point &b) { return x * b.y - y * b.x; }
 	double operator % (const Point &b) { return x * b.x + y * b.y; }
-	double len2() { return x * x + y * y; }
+	double lensqr() { return x * x + y * y; }
 	double len() { return sqrt(x * x + y * y); }
 };
 inline double xmul(Point a, Point b, Point c) {
@@ -56,7 +56,7 @@ bool is_point_onseg(Point p1,Point p2,Point P)
 }
 // 点q 到直线 {p1, p2} 垂足
 Point proj(Point p1, Point p2, Point q) {
-	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).len2()));
+	return p1 + ((p2 - p1) * ((p2 - p1) % (q - p1) / (p2 - p1).lensqr()));
 }
 // 点q 到线段 {p1, p2} 的距离
 double dis_p_seg(Point q, Point p1, Point p2) {
@@ -68,8 +68,8 @@ double dis_p_seg(Point q, Point p1, Point p2) {
 vector<Point> getCL(Point c, double r, Point p1, Point p2) { 
 	vector<Point> res;
 	double x = (p1 - c) % (p2 - p1);
-	double y = (p2 - p1).len2();
-	double d = x * x - y * ((p1 - c).len2() - r * r);
+	double y = (p2 - p1).lensqr();
+	double d = x * x - y * ((p1 - c).lensqr() - r * r);
 	if (d < -eps) return res;
 	if (d < 0) d = 0;
 	Point q1 = p1 - ((p2 - p1) * (x / y));
@@ -81,7 +81,7 @@ vector<Point> getCL(Point c, double r, Point p1, Point p2) {
 // 圆与圆的交点
 vector<Point> getCC(Point c1, double r1, Point c2, double r2) { 
 	vector<Point> res;
-	double x = (c1 - c2).len2();
+	double x = (c1 - c2).lensqr();
 	double y = ((r1 * r1 - r2 * r2) / x + 1) / 2;
 	double d = r1 * r1 / x - y * y;
 	if (d < -eps) return res;
@@ -110,7 +110,7 @@ double areaCC(Point c1, double r1, Point c2, double r2) {
 bool onCir(Point p1, Point p2, Point p3, Point p4) {
 	if (fabs((p2 - p1) * (p3 - p1)) < eps) return true;
 	Point c = ccenter(p1, p2, p3);
-	return fabs((c - p1).len2() - (c - p4).len2()) < eps;
+	return fabs((c - p1).lensqr() - (c - p4).lensqr()) < eps;
 }
 //两圆公切线, 先返回内公切线, 后面是外公切线
 vector<Line> getLineCC(Point c1, double r1, Point c2, double r2) {
