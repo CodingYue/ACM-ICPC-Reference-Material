@@ -1,3 +1,9 @@
+# ACM/ICPC Reference Material
+
+ACM/ICPC 2015 World Finals @Morocco
+
+Fudan University `KuroRekishi` Team
+
 # Usage
 
 Run "make" in shell and have fun.
@@ -14,3 +20,8 @@ Use "<TeX>" "</TeX>" to escape to TeX.
 
 访问 <http://riat.re/T/latest.pdf> 可以获取对应Repo里最新版本的pdf。
 /T/下面也保存了历史版本的编译结果。
+
+# Appreciate
+
+Yanming Liu @Riatre
+Haoming Xing @Flydutchman
